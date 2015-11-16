@@ -1,0 +1,85 @@
+{% extends "BackBundle::layout.html.twig" %}
+
+{% block content %}
+    <div>
+
+        {#{{ dump(offers) }}#}
+
+        <div class="panel heading-border">
+            <div class="panel-heading">
+                <span class="panel-title hidden-xs"> {{ offers.title }}</span>
+
+                 <span class="pull-right">
+                <a href="{{  path("back_announcement_edit",{'id':offers.id} ) }}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
+                    <i class="fa fa-pencil"></i>
+                </a>
+
+                <a href="{{  path("back_announcement_delete",{'id':offers.id} ) }}" data-original-title="delete" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-red vd_red delete">
+                    <i class="fa fa-times"></i>
+                </a>
+                     </span>
+
+            </div>
+            <div class="panel-body bg-light">
+                <!-- Titre -->
+                <div >
+                    <div >
+                        <h1>
+                            <span><span ></span>{{ offers.title }}</span>
+                            <span><strong>{{ offers.price }}&nbsp;€</strong></span>
+                        </h1><span>	Réf. : {{ offers.ref }} / {{ offers.createdAt|date }}</span>
+                    </div>
+                </div>
+                <!-- //Titre -->
+
+
+                <!-- Image -->
+                <div class="col-md-6">
+                    <img  src="http://placehold.it/680x510" style="height: 100%; width: 100%;" alt="">
+                </div>
+
+
+                <!-- descriptif -->
+                <div class="col-md-6">
+                    <h2>{{ offers.city }}({{ offers.cp }})</h2>
+
+                    <p>{{ offers.address }}.<br>
+                    <ul>
+                        <li>
+                            <span>Rooms:</span>
+                            {{ offers.nbrooms }}
+                        </li>
+                        <li>
+                            <span>Bedrooms:</span>
+                            {{ offers.bedrooms }}
+                        </li>
+                        <li>
+                            <span>Surface:</span>
+                            {{ offers.surface }}&nbsp;<span>m<sup>2</sup></span>
+                        </li>
+                        <li >
+                            <span >Price / m<sup>2</sup>:</span>
+                            {{ offers.price/offers.surface }}&nbsp;<span >€</span>
+                        </li>
+                        <li >
+                            <span >Energyy Label:</span>
+                            {{ offers.energyLabel }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Annonce -->
+                <div class="col-md-12">
+
+                    <h2>Descriptif</h2>
+
+                    {{ offers.content }}
+                    <p></p>
+                </div>
+                <!-- //Annonce -->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

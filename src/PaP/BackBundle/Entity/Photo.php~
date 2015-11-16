@@ -1,0 +1,229 @@
+<?php
+
+namespace PaP\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
+/**
+ * Photo
+ *
+ * @ORM\Table(name="photo")
+ * @ORM\Entity(repositoryClass="PaP\BackBundle\Repository\PhotoRepository")
+ * @ORM\HasLifeCycleCallbacks
+ */
+class Photo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    protected $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fath", type="string", length=255)
+     */
+    protected $path;
+
+
+    /**
+     *
+     * @ORM\Column(name="file")
+     *
+     */
+    protected $file;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updateAt", type="datetime", nullable=true)
+     */
+    protected $updatedAt;
+
+
+
+
+   
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Photo
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Photo
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+
+    public function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/uploads';
+
+    }
+
+    public function getAbsolutePath()
+    {
+        if(file_exists($this->getUploadRootDir()."/".$this->path))
+        {
+            return $this->getUploadRootDir()."/".$this->path;
+        }
+
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        $this->tempfile=$this->getAbsolutePath();
+        $this->oldFile=$this->getPath();
+        $this->updateAt= new \DateTime();
+
+        if(null !==$this->file)
+        {
+
+            $this->path=sha1(uniqid(mt_rand(),true).'.'.$this->file-guessExtension());
+
+        }
+    }
+
+    public function upload()
+    {
+
+        if(null!==$this->file)
+        {
+            $this->file->move($this->getUploadRootDir(), $this->path);
+            unset($this->file);
+
+            if($this->oldFile8=null)
+            {
+                unlink($this->tempFile);
+            }
+        }
+
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function preRemoveUpload()
+    {
+        $this->tempFile=$this->getAbsolutePath();
+
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+
+
+        if(file_exists($this->tempFile))
+        {
+            unlink($this->tempFile);
+
+        }
+
+    }
+
+    /**
+     * @ORM\PostLoad
+     */
+    public function postLoad()
+    {
+
+        $this->updatedAt = new \DateTime();
+    }
+
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Photo
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+}

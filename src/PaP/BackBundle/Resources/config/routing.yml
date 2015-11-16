@@ -1,0 +1,7 @@
+back_homepage:
+    path:     /
+    defaults: { _controller: BackBundle:Default:index }
+
+back_announcements:
+    resource: "@BackBundle/Resources/config/routing/announcement.yml"
+    prefix: /announcement

@@ -1,0 +1,28 @@
+
+back_announcement_index:
+    path:     /index
+    defaults: { _controller: BackBundle:Announcement:index }
+
+
+back_announcement_show:
+    path:     /show/{id}
+    defaults: { _controller: BackBundle:Announcement:show }
+    requirements:
+                              id: \d+
+
+
+back_announcement_create:
+    path:     /create
+    defaults: { _controller: BackBundle:Announcement:create }
+
+back_announcement_edit:
+    path:     /edit/{id}
+    defaults: { _controller: BackBundle:Announcement:edit }
+    requirements:
+                          id: \d+
+
+back_announcement_delete:
+    path:     /delete/{id}
+    defaults: { _controller: BackBundle:Announcement:delete }
+    requirements:
+                              id: \d+

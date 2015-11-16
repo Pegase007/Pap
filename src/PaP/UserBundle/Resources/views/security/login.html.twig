@@ -1,0 +1,72 @@
+{% extends 'UserBundle::layoutsecurity.html.twig' %}
+
+
+{% block content %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+    <form action="{{ path('login_check') }}" method="post" id="contact">
+        <div class="panel-body bg-light p25 pb15">
+
+            <!-- Social Login Buttons -->
+            <div class="section row">
+                <div class="col-md-6">
+                    <a href="#" class="button btn-social facebook span-left btn-block">
+                      <span>
+                        <i class="fa fa-facebook"></i>
+                      </span>Facebook</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="button btn-social googleplus span-left btn-block">
+                      <span>
+                        <i class="fa fa-google-plus"></i>
+                      </span>Google+</a>
+                </div>
+                <div class="col-md-6 hidden">
+                    <a href="#" class="button btn-social twitter span-left btn-block">
+                      <span>
+                        <i class="fa fa-twitter"></i>
+                      </span>Twitter</a>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="section-divider mv30">
+                <span>OR</span>
+            </div>
+
+            <!-- Username Input -->
+            <div class="section">
+                <label for="username" class="field-label text-muted fs18 mb10">Username</label>
+                <label for="username" class="field prepend-icon">
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="gui-input" placeholder="Enter username">
+                    <label for="username" class="field-icon">
+                        <i class="fa fa-user"></i>
+                    </label>
+                </label>
+            </div>
+
+            <!-- Password Input -->
+            <div class="section">
+                <label for="password" class="field-label text-muted fs18 mb10">Password</label>
+                <label for="password" class="field prepend-icon">
+                    <input type="password" id="password" name="_password" class="gui-input" placeholder="Enter password">
+                    <label for="password" class="field-icon">
+                        <i class="fa fa-lock"></i>
+                    </label>
+                </label>
+            </div>
+        </div>
+
+        <div class="panel-footer clearfix">
+            <button type="submit" class="button btn-primary mr10 pull-right">Sign In</button>
+            <label class="switch ib switch-primary mt10">
+                <input type="checkbox" name="remember" id="remember" checked>
+                <label for="remember" data-on="YES" data-off="NO"></label>
+                <span>Remember me</span>
+            </label>
+        </div>
+
+    </form>
+{% endblock %}

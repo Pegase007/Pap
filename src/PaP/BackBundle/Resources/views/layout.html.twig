@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block stylesheets %}
+
+        ￼￼
+    ￼ <link rel='stylesheet' type='text/css' href='{{ asset("bundles/back/css/theme.css") }}'>
+    ￼￼￼￼￼￼
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+
+
+    {% endblock %}
+
+</head>
+
+<body class="blank-page">
+
+<!-- Start: Main -->
+<div id="main">
+
+    <!-- Start: Header -->
+    {% include 'BackBundle:Partials:header.html.twig'%}
+    <!-- End: Header -->
+
+    <!-- Start: Sidebar -->
+
+    {% include 'BackBundle:Partials:navbar.html.twig'%}
+
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- Start: Topbar-Dropdown -->
+        {% include 'BackBundle:Partials:userdropdown.html.twig'%}
+
+        <!-- End: Topbar-Dropdown -->
+
+        <!-- Start: Topbar -->
+        {% include 'BackBundle:Partials:breadcrumbbar.html.twig'%}
+
+        <!-- End: Topbar -->
+
+        <!-- Begin: Content -->
+        <section id="content" class="animated fadeIn">
+
+            {% block content %}
+            {% endblock %}
+
+        </section>
+        <!-- End: Content -->
+
+    </section>
+
+    <!-- Start: Right Sidebar -->
+    {% include 'BackBundle:Partials:rightsidebar.html.twig'%}
+    <!-- End: Right Sidebar -->
+
+</div>
+<!-- End: Main -->
+
+<!-- BEGIN: PAGE SCRIPTS -->
+
+{% block javascripts %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+<!-- Theme Javascript -->
+<script src="{{ asset("bundles/back/js/utility/utility.js") }}"></script>
+<script src="{{ asset("bundles/back/js/demo/demo.js") }}"></script>
+<script src="{{ asset("bundles/back/js/main.js") }}"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+
+
+    });
+</script>
+<!-- END: PAGE SCRIPTS -->
+{% endblock %}
+</body>
+
+</html>
