@@ -154,14 +154,18 @@
                             </select>
                             <i class="arrow double"></i>
                         </label>
-                        {{- form_errors(formOffer.energyLabel) -}}
+                        {{- form_errors(formOffer.type) -}}
                     </div>
+                    {#{{ dump(formOffer.energyLabel) }}#}
                     <div class="col-md-2">
-                        <label for="{{ formOffer.energyLabel.vars.id }}" class="field prepend-icon" >
-                            <input type="text" id="{{ formOffer.energyLabel.vars.id }}" name="{{ formOffer.energyLabel.vars.full_name }}" id="{{ formOffer.energyLabel.vars.id }}" class="gui-input" placeholder="{{ formOffer.energyLabel.vars.name }}..." value="{{ formOffer.energyLabel.vars.value }}">
-                            <label for="{{ formOffer.energyLabel.vars.id }}" class="field-icon">
-                                <i class="fa fa-bolt"></i>
-                            </label>
+                         <label class="field select">
+                            <select id="{{ formOffer.energyLabel.vars.id }}" name="{{ formOffer.energyLabel.vars.full_name }}">
+                                <option value="">Energy...</option>
+                                {% for energy in formOffer.energyLabel.vars.choices %}
+                                <option value="{{ energy.value }}">{{ energy.label }}</option>
+                                {% endfor %}
+                            </select>
+                            <i class="arrow double"></i>
                         </label>
                         {{- form_errors(formOffer.energyLabel) -}}
                     </div>

@@ -14,10 +14,11 @@ class AnnouncementHandler
     protected $request;
     protected $em;
 
-    public function __construct(Form $form, Request $request)
+    public function __construct(Form $form, Request $request, EntityManager $em)
     {
         $this->form=$form;
         $this->request=$request;
+        $this->em= $em;
 
     }
 
@@ -29,6 +30,7 @@ class AnnouncementHandler
         if($this->form->isValid())
         {
 
+            $this->onSuccess();
             return true;
 
         }
@@ -48,7 +50,21 @@ class AnnouncementHandler
 
 
 
+        $this->em->persist($this->form->getData());
+//            die;
+        $this->em->flush();
+
+
     }
+
+    public function createView()
+    {
+
+        return $this->form->createView();
+    }
+
+
+
 
 
 

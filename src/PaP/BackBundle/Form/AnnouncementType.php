@@ -27,15 +27,15 @@ class AnnouncementType extends AbstractType
             ->add('type','choice', array(
                 'choices'  => array('apt' => 'Appartment', 'hs' => 'House')
             ))
-            ->add('energyLabel')
+            ->add('energyLabel','choice', array(
+                'choices'  => array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G',)
+            ))
             ->add('surface')
             ->add('nbrooms')
             ->add('bedrooms')
             ->add('pricePerMeterSquare')
             ->add('content')
             ->add('activate')
-            ->add('created_at')
-            ->add('updated_at')
             ->add('user', 'entity',[
                 "expanded"=>true,
                 'class' => 'BackBundle:User',
@@ -64,6 +64,6 @@ class AnnouncementType extends AbstractType
      */
     public function getName()
     {
-        return 'pap_backbundle_announcement';
+        return 'announcement_form';
     }
 }

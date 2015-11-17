@@ -49,54 +49,22 @@ class AnnouncementController extends Controller
      */
     public function createAction(Request $request)
     {
-        /**
-         * Creation et traitement du formulaire
-         */
 
-
-
-//        $announcement=new Announcement();
-//        $em=$this->getDoctrine()->getManager();
-//        $formOffer=$this->createForm(new AnnouncementType($em),$announcement)
-//            ->add("submit","submit");
-//        $formOffer->handleRequest($request);
-//        if($formOffer->isValid())
-//        {
-//            $em->persist($announcement);
-//            $em->flush();
-//            $this->get("session")->getFlashBag()
-//                ->add("success","Your announcement has been creeated");
-//
-//            return $this->redirectToRoute("back_announcement_index");
-//        }
-//        return $this->render("BackBundle:Announcement:create.html.twig",["formOffer"=> $formOffer->createView()]);
-
-
-
-        /**
-         * Passer par un Handler pour traiter le formulaire
-         */
-        $annoucement = new Announcement();
-        $formOffer = new AnnouncementHandler( $this->createForm(new AnnouncementType(),$annoucement),$request);
+//        $annoucement = new Announcement();
+        $formOffer = $this->get('announcement_handler');
 
         if($formOffer->process())
         {
 
-            $annoucement->upload();
+//            ->upload();
 
+            $this->get("session")->getFlashBag()
+                ->add("success","Your announcement has been creeated");
+            return $this->redirectToRoute("back_announcement_index");
 
-            $em=$this->getDoctrine()->getManager();
-            $em->persist($annoucement);
-            $em->flush();
+        }
 
-
-            $this->get("session")->getFlashBag();
-//                ->add("success","Your announcement has been creeated");
-                return $this->redirectToRoute("back_announcement_index");
-
-            }
-
-        return $this->render("BackBundle:Announcement:create.html.twig",["formOffer"=> $formOffer->getForm()->createView()]);
+        return $this->render("BackBundle:Announcement:create.html.twig",["formOffer"=> $formOffer->createView()]);
 
     }
 
@@ -108,7 +76,7 @@ class AnnouncementController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction(Announcement $id, Request $request)
     {
 
         $em = $this->getDoctrine()->getEntityManager();

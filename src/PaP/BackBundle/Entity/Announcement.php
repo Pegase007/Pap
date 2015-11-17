@@ -35,11 +35,11 @@ class Announcement
     /**
      * @var string
      *
-     *   * @Assert\Length(
+      @Assert\Length(
      *    min = 10,
      *    minMessage = "Your first name must be at least {{ limit }} characters long",
      *)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank( message="Please enter a Title")
      * @ORM\Column(name="title", type="string", length=100)
      */
     protected $title;
@@ -47,12 +47,12 @@ class Announcement
     /**
      * @var float
      *
-     *    * @Assert\Regex(
+      @Assert\Regex(
      *     pattern="/^[0-9]{1,}(.)?[0-9]{1,2}$/",
      *     message="The value {{ value }} is not a valid price."
      * )
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a price")
      * @ORM\Column(name="price", type="integer")
      */
     protected $price;
@@ -67,10 +67,11 @@ class Announcement
 
     /**
      * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 400,
-     *     minHeight = 200,
-     *     maxHeight = 400
+     *     maxSize = "2000k",
+     *     mimeTypes = {"image/jpeg", "image/png","image/gif"},
+     *     mimeTypesMessage = "Please upload a valid image jpeg,png or gif format",
+     *     allowLandscape = true,
+     *     allowPortrait = false
      * )
      */
     private $file;
@@ -80,12 +81,12 @@ class Announcement
     /**
      * @var string
      *
-     * * @Assert\Regex(
+     * @Assert\Regex(
      *     pattern="/^(REF-)[0-9]{1,}$/",
-     *     message="The value {{ value }} is not a valid reference."
+     *     message="{{ value }} is not a valid reference, please enter a reference REF-XXXX."
      * )
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a reference REF-XXX")
      * @ORM\Column(name="ref", type="string", length=100)
      */
     protected $ref;
@@ -93,7 +94,7 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid address")
      * @ORM\Column(name="address", type="string", length=255)
      */
     protected $address;
@@ -101,7 +102,7 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid city")
      * @ORM\Column(name="city", type="string", length=100)
      */
     protected $city;
@@ -111,7 +112,7 @@ class Announcement
      *
      * @Assert\Type(
      *   type="integer",
-     *   message="The value {{ value }} is not a valid {{ type }}."
+     *   message="{{ value }} is not a valid {{ type }}."
      * )
      * @Assert\Length(
      *    min = 5,
@@ -120,7 +121,7 @@ class Announcement
      *    maxMessage = "Your cp must  {{ limit }} characters long",
      *)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid cp")
      * @ORM\Column(name="cp", type="integer")
      */
     protected $cp;
@@ -128,7 +129,7 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid country")
      * @ORM\Column(name="country", type="string", length=100)
      */
     protected $country;
@@ -143,21 +144,21 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\Length(
-     *    max = 1,
-     *    minMessage = "Your energyLabel must {{ limit }} letter long",
-     *)
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="energyLabel", type="string", length=100)
+     * @Assert\Choice(choices = {"A", "B", "C", "D", "E", "F", "G"}, message = "Choose a valid type.")
+     * @ORM\Column(name="energyLabel", type="string", length=100, nullable=false )
      */
     protected $energyLabel;
 
     /**
-     * @var integer
+     * @var float
      *
-     *@Assert\NotBlank()
-     * @ORM\Column(name="surface", type="integer")
+     * @Assert\Type(
+     *   type="float",
+     *   message="{{ value }} is not a valid {{ type }}."
+     * )
+     *
+     * @Assert\NotBlank(message="Please enter a valid surface")
+     * @ORM\Column(name="surface", type="float")
      */
     protected $surface;
 
@@ -169,7 +170,7 @@ class Announcement
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter the number of rooms")
      * @ORM\Column(name="nbRooms", type="integer")
      */
     protected $nbrooms;
@@ -177,20 +178,20 @@ class Announcement
     /**
      * @var integer
      *
-     *  * @Assert\Type(
+     * @Assert\Type(
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      *
-     *@Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter the number of bedrooms")
      * @ORM\Column(name="bedrooms", type="integer")
      */
     protected $bedrooms;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="pricePerMeterSquare", type="integer", nullable=true)
+     * @ORM\Column(name="pricePerMeterSquare", type="float", nullable=true)
      */
     protected $pricePerMeterSquare;
 
@@ -199,12 +200,12 @@ class Announcement
     /**
      * @var string
      *
-     *    * * @Assert\Length(
+     * @Assert\Length(
      *      max = 1500,
      *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
      *
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid content")
      * @ORM\Column(name="content", type="text")
      */
     protected $content;
@@ -247,9 +248,9 @@ class Announcement
      */
     protected $options;
 
-
-
-
+    /**
+     * construct method
+     */
     public function __construct()
     {
 
@@ -276,7 +277,12 @@ class Announcement
      */
     public function onPrePersist()
     {
+
+//        dump($this->getSurface());
+//        dump($this->getPrice());
+//        dump($this->getPrice()/$this->getSurface());
         $this->createdAt = new \DateTime("now");
+        $this->pricePerMeterSquare = $this->getPrice()/$this->getSurface();
     }
 
     /**
@@ -287,13 +293,9 @@ class Announcement
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime("now");
+        $this->pricePerMeterSquare = $this->getPrice()/$this->getSurface();
+
     }
-
-
-   
-
-
-
 
     /**
      * Get id
