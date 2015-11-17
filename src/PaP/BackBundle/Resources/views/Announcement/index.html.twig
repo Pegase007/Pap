@@ -12,7 +12,6 @@
 
     {% endfor %}
 
-    {% for offer in offers %}
     <div class="panel">
         <div class="panel-body pn">
             <div class="table-responsive">
@@ -20,42 +19,39 @@
                     <thead>
                     <tr class="bg-light">
                         <th class="text-center">Select</th>
-                        <th class="">Image</th>
                         <th class="">Title</th>
+                        <th class="">Image</th>
                         <th class="">City CP</th>
                         <th class="">Ref</th>
                         <th class="">Price</th>
-                        <th class="">Energy</th>
-                        <th class="">Rooms</th>
-                        <th class="">BdRooms</th>
+
                         <th class="text-right"></th>
 
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <label class="option block mn">
-                                <input type="checkbox" name="mobileos" value="FR">
-                                <span class="checkbox mn"></span>
-                            </label>
-                        </td>
+                    {% for offer in offers %}
 
-                        <td class=""></td>
-                        <td class="">{{ offer.price }}</td>
-                        <td class="">{{ offer.title }}</td>
-                        <td class="">{{ offer.ref }}</td>
-                        <td class="">{{ offer.price }}</td>
-                        <td class="">{{ offer.energyLabel }}</td>
-                        <td class="">{{ offer.nbrooms }}</td>
-                        <td class="">{{ offer.bedrooms }}</td>
+                        <tr>
+                            <td class="text-center">
+                                <label class="option block mn">
+                                    <input type="checkbox" name="mobileos" value="FR">
+                                    <span class="checkbox mn"></span>
+                                </label>
+                            </td>
+
+                            <td class="">{{ offer.price }}</td>
+                            <td class="">{{ offer.title }}</td>
+                            <td class=""><img class="img-responsive img-circle" src="{{ asset("uploads/announcement/" ~ offer.photo) }}" /></td>
+                            <td class="">{{ offer.ref }}</td>
+                            <td class="">{{ offer.price }}</td>
 
 
-                        <td class="menu-action">
+                            <td class="menu-action">
 
-                            <a href="{{  path("back_announcement_show",{'id':offer.id} ) }}" data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green">
-                                <i class="fa fa-eye"></i>
-                            </a>
+                                <a href="{{  path("back_announcement_show",{'offer':offer.id} ) }}" data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green">
+                                    <i class="fa fa-eye"></i>
+                                </a>
 
                                 <a href="{{  path("back_announcement_edit",{'id':offer.id} ) }}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
                                     <i class="fa fa-pencil"></i>
@@ -65,9 +61,10 @@
                                     <i class="fa fa-times"></i>
                                 </a>
 
-                        </td>
+                            </td>
 
-                    </tr>
+                        </tr>
+                    {% endfor %}
 
                     </tbody>
                 </table>
@@ -75,5 +72,4 @@
         </div>
     </div>
 
-    {% endfor %}
 {% endblock %}

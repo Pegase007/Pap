@@ -3,18 +3,18 @@
 {% block content %}
     <div>
 
-        {#{{ dump(offers) }}#}
+        {#{{ dump(offer) }}#}
 
         <div class="panel heading-border">
             <div class="panel-heading">
-                <span class="panel-title hidden-xs"> {{ offers.title }}</span>
+                <span class="panel-title hidden-xs"> {{ offer.title }}</span>
 
                  <span class="pull-right">
-                <a href="{{  path("back_announcement_edit",{'id':offers.id} ) }}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
+                <a href="{{  path("back_announcement_edit",{'id':offer.id} ) }}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
                     <i class="fa fa-pencil"></i>
                 </a>
 
-                <a href="{{  path("back_announcement_delete",{'id':offers.id} ) }}" data-original-title="delete" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-red vd_red delete">
+                <a href="{{  path("back_announcement_delete",{'id':offer.id} ) }}" data-original-title="delete" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-red vd_red delete">
                     <i class="fa fa-times"></i>
                 </a>
                      </span>
@@ -25,9 +25,9 @@
                 <div >
                     <div >
                         <h1>
-                            <span><span ></span>{{ offers.title }}</span>
-                            <span><strong>{{ offers.price }}&nbsp;€</strong></span>
-                        </h1><span>	Réf. : {{ offers.ref }} / {{ offers.createdAt|date }}</span>
+                            <span><span ></span>{{ offer.title }}</span>
+                            <span><strong>{{ offer.price }}&nbsp;€</strong></span>
+                        </h1><span>	Réf. : {{ offer.ref }} / {{ offer.createdAt|date }}</span>
                     </div>
                 </div>
                 <!-- //Titre -->
@@ -41,29 +41,29 @@
 
                 <!-- descriptif -->
                 <div class="col-md-6">
-                    <h2>{{ offers.city }}({{ offers.cp }})</h2>
+                    <h2>{{ offer.city }}({{ offer.cp }})</h2>
 
-                    <p>{{ offers.address }}.<br>
+                    <p>{{ offer.address }}.<br>
                     <ul>
                         <li>
                             <span>Rooms:</span>
-                            {{ offers.nbrooms }}
+                            {{ offer.nbrooms }}
                         </li>
                         <li>
                             <span>Bedrooms:</span>
-                            {{ offers.bedrooms }}
+                            {{ offer.bedrooms }}
                         </li>
                         <li>
                             <span>Surface:</span>
-                            {{ offers.surface }}&nbsp;<span>m<sup>2</sup></span>
+                            {{ offer.surface }}&nbsp;<span>m<sup>2</sup></span>
                         </li>
                         <li >
                             <span >Price / m<sup>2</sup>:</span>
-                            {{ offers.price/offers.surface }}&nbsp;<span >€</span>
+                            {{ offer.price/offer.surface }}&nbsp;<span >€</span>
                         </li>
                         <li >
                             <span >Energyy Label:</span>
-                            {{ offers.energyLabel }}</span>
+                            {{ offer.energyLabel }}</span>
                         </li>
                     </ul>
                 </div>
@@ -73,7 +73,7 @@
 
                     <h2>Descriptif</h2>
 
-                    {{ offers.content }}
+                    {{ offer.content }}
                     <p></p>
                 </div>
                 <!-- //Annonce -->

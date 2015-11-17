@@ -2,6 +2,7 @@
 namespace PaP\BackBundle\Form\Handler;
 
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,6 +12,7 @@ class AnnouncementHandler
 
     protected $form;
     protected $request;
+    protected $em;
 
     public function __construct(Form $form, Request $request)
     {

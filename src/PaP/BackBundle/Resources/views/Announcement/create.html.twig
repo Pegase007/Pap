@@ -29,7 +29,7 @@
 
         <div class="panel heading-border">
 
-            {{ form_start(formOffer,{'attr':{novalidate:"novalidate"}}) }}
+            {{ form_start(formOffer,{'attr':{novalidate:"novalidate", enctype: "multipart/form-data"}}) }}
             <div class="panel-body bg-light">
 
                 <div class="section-divider mt20 mb40">
@@ -47,6 +47,8 @@
                          {% endfor %}
                         </select>
                       </label>
+                      {{ form_errors(formOffer.user) }}
+
                     </div>
 
                 <div class="section row" id="spy1">
@@ -206,7 +208,7 @@
                 <div class="section" id="spy2">
                     <label for="file1" class="field file">
                         <span class="button btn-primary"> Choose File </span>
-                        <input type="file" class="gui-file" name="upload1" id="file1" onChange="document.getElementById('uploader1').value = this.value;">
+                        {{- form_widget(formOffer.file, {'attr': {'class' : 'gui-file', 'id': 'file1'}}) -}}
                         <input type="text" class="gui-input" id="uploader1" placeholder="no file selected" readonly>
                     </label>
                 </div>

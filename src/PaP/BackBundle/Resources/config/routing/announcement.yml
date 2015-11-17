@@ -5,24 +5,28 @@ back_announcement_index:
 
 
 back_announcement_show:
-    path:     /show/{id}
+    path:     /show/{offer}
     defaults: { _controller: BackBundle:Announcement:show }
     requirements:
-                              id: \d+
-
+        id: \d+
+        method: GET
 
 back_announcement_create:
     path:     /create
     defaults: { _controller: BackBundle:Announcement:create }
+    requirements:
+        method: GET|POST
 
 back_announcement_edit:
     path:     /edit/{id}
     defaults: { _controller: BackBundle:Announcement:edit }
     requirements:
-                          id: \d+
+        id: \d+
+        method: GET|POST
 
 back_announcement_delete:
     path:     /delete/{id}
     defaults: { _controller: BackBundle:Announcement:delete }
     requirements:
-                              id: \d+
+        id: \d+
+        method: POST|DELETE

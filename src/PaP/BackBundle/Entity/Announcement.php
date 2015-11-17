@@ -4,6 +4,7 @@ namespace PaP\BackBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -55,6 +56,26 @@ class Announcement
      * @ORM\Column(name="price", type="integer")
      */
     protected $price;
+
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="photo", type="string")
+     */
+    protected $photo;
+
+    /**
+     * @Assert\Image(
+     *     minWidth = 200,
+     *     maxWidth = 400,
+     *     minHeight = 200,
+     *     maxHeight = 400
+     * )
+     */
+    private $file;
+
+
 
     /**
      * @var string
@@ -114,7 +135,7 @@ class Announcement
 
     /**
      * @var string
-     *
+     * @Assert\Choice(choices = {"hs", "apt"}, message = "Choose a valid type.")
      * @ORM\Column(name="type", type="string", length=100, nullable=false)
      */
     protected $type;
@@ -143,12 +164,12 @@ class Announcement
     /**
      * @var integer
      *
-     *   * @Assert\Type(
+     * @Assert\Type(
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      *
-     *@Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(name="nbRooms", type="integer")
      */
     protected $nbrooms;
@@ -196,26 +217,23 @@ class Announcement
     protected $activate;
 
     /**
-     * @var datetime $created_at
+     * @var datetime $createdAt
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
-     * @var datetime $updated_at
+     * @var datetime $updatedAt
      *
-     * @ORM\Column(type="datetime", nullable = true)
+     * @ORM\Column(type="datetime", nullable = true, name="updated_at")
      */
-    protected $updated_at;
+    protected $updatedAt;
+
+
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="photo")
-     *
-     */
-    protected $photo;
-
-    /**
+     * @Assert\NotBlank(message="Please choose a user")
      * @ORM\ManyToOne(targetEntity="User", inversedBy="user")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="id", nullable=false)
      *
@@ -228,6 +246,8 @@ class Announcement
      * @ORM\JoinTable(name="Announcement_Options")
      */
     protected $options;
+
+
 
 
     public function __construct()
@@ -256,7 +276,7 @@ class Announcement
      */
     public function onPrePersist()
     {
-        $this->created_at = new \DateTime("now");
+        $this->createdAt = new \DateTime("now");
     }
 
     /**
@@ -266,7 +286,7 @@ class Announcement
      */
     public function onPreUpdate()
     {
-        $this->updated_at = new \DateTime("now");
+        $this->updatedAt = new \DateTime("now");
     }
 
 
@@ -630,7 +650,7 @@ class Announcement
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -642,7 +662,7 @@ class Announcement
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -654,7 +674,7 @@ class Announcement
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -666,7 +686,7 @@ class Announcement
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -700,14 +720,9 @@ class Announcement
      *
      * @return Announcement
      */
-    public function setPhoto(Photo $photo= null)
+    public function setPhoto($photo= null)
     {
 
-        if($photo == null || !$photo->getFile())
-        {
-            $photo=null;
-
-        }
         $this->photo = $photo;
 
         return $this;
@@ -807,5 +822,80 @@ class Announcement
     public function getActivate()
     {
         return $this->activate;
+    }
+
+
+
+
+    public function getAbsolutePath()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadRootDir().'/'.$this->photo;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadDir().'/'.$this->photo;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/announcement';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->photo = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
     }
 }

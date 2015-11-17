@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $offers=$em->getRepository("BackBundle:Announcement")
-            ->findAll();
+            ->getAllByCriteria();
 
         return $this->render("BackBundle:Announcement:index.html.twig",["offers"=>$offers]);
 
@@ -32,21 +32,17 @@ class AnnouncementController extends Controller
 
 
 
-    public function showAction($id)
+    public function showAction(Announcement $offer)
     {
 
-        $em = $this->getDoctrine()->getManager();
-
-        $offers=$em->getRepository("BackBundle:Announcement")
-            ->find($id);
-
-        return $this->render("BackBundle:Announcement:show.html.twig",["offers"=>$offers]);
+        return $this->render("BackBundle:Announcement:show.html.twig",["offer"=>$offer]);
 
     }
 
     /**
      * Allows to create and Announcement
      *
+     * @TODO: both methods functions
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -56,6 +52,7 @@ class AnnouncementController extends Controller
         /**
          * Creation et traitement du formulaire
          */
+
 
 
 //        $announcement=new Announcement();
@@ -79,13 +76,20 @@ class AnnouncementController extends Controller
         /**
          * Passer par un Handler pour traiter le formulaire
          */
-        $formOffer = new AnnouncementHandler( $this->createForm(new AnnouncementType(),new Announcement()),$request);
+        $annoucement = new Announcement();
+        $formOffer = new AnnouncementHandler( $this->createForm(new AnnouncementType(),$annoucement),$request);
 
         if($formOffer->process())
         {
+
+            $annoucement->upload();
+
+
             $em=$this->getDoctrine()->getManager();
-            $em->persist($formOffer->getForm()->getData());
+            $em->persist($annoucement);
             $em->flush();
+
+
             $this->get("session")->getFlashBag();
 //                ->add("success","Your announcement has been creeated");
                 return $this->redirectToRoute("back_announcement_index");

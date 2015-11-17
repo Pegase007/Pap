@@ -23,6 +23,7 @@ class AnnouncementType extends AbstractType
             ->add('city')
             ->add('cp')
             ->add('country')
+            ->add('file', null, array('attr' => array('accept' => 'image/*')))
             ->add('type','choice', array(
                 'choices'  => array('apt' => 'Appartment', 'hs' => 'House')
             ))
