@@ -41,14 +41,8 @@
 
 
             <div class="section">
-                <label class="field select-multiple">
-                    <select name="{{ editForm.user.vars.full_name }}" id="{{ editForm.user.vars.id }}" multiple="" value="{{ editForm.user.vars.value }}">
-                        {% for user in editForm.user.children %}
-                            <option value="{{ user.vars.value }}">{{ user.vars.label }} </option>
-                        {% endfor %}
-                    </select>
-                </label>
-                {{ form_errors(editForm.user) }}
+
+                {{ form_row(editForm.user) }}
 
             </div>
 

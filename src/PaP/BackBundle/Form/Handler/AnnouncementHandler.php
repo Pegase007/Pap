@@ -3,34 +3,52 @@ namespace PaP\BackBundle\Form\Handler;
 
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\Form;
+use PaP\BackBundle\Entity\Announcement;
+use PaP\BackBundle\Form\AnnouncementType;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 class AnnouncementHandler
 
 {
 
-    protected $form;
+    protected $formfactory;
     protected $request;
     protected $em;
+    protected $announcement;
+    protected $form;
 
-    public function __construct(Form $form, Request $request, EntityManager $em)
+
+
+    /**
+     * @param Form $form
+     * @param Request $request
+     * @param EntityManager $em
+     */
+    public function __construct(FormFactory $form, Request $request, EntityManager $em)
     {
-        $this->form=$form;
+        $this->formfactory = $form;
         $this->request=$request;
         $this->em= $em;
 
     }
 
-    public function process()
+    /**
+     * Process checks that the form is valid
+     *
+     * @return bool
+     */
+    public function process(Announcement $offer)
     {
 
-        $this->form->handleRequest($this->request);
+         $this->generateForm($offer);
+
+        $this->form ->handleRequest($this->request);
 
         if($this->form->isValid())
         {
 
-            $this->onSuccess();
+            $this->uploadAndStore();
             return true;
 
         }
@@ -39,28 +57,45 @@ class AnnouncementHandler
 
     }
 
+    /**
+     *
+     * @return Form
+     */
     public function getForm()
     {
 
         return $this->form;
     }
 
-    protected function onSuccess()
+    /**
+     *
+     * @return Form
+     */
+    public function setForm($form)
     {
-
-
-
-        $this->em->persist($this->form->getData());
-//            die;
-        $this->em->flush();
-
-
+        $this->form = $form;
     }
 
-    public function createView()
+    /*
+     * Handle storing to database
+     */
+    protected function uploadAndStore()
     {
 
-        return $this->form->createView();
+        $this->form->getData()->upload();
+
+        $this->em->persist($this->form->getData());
+        $this->em->flush();
+    }
+
+
+
+
+    public function generateForm(Announcement $offer)
+    {
+
+        $this->form = $this->formfactory->create(new AnnouncementType(), $offer);
+
     }
 
 

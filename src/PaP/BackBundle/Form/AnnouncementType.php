@@ -23,7 +23,7 @@ class AnnouncementType extends AbstractType
             ->add('city')
             ->add('cp')
             ->add('country')
-            ->add('file', null, array('attr' => array('accept' => 'image/*')))
+            ->add('file', 'file', array('attr' => array('accept' => 'image/*')))
             ->add('type','choice', array(
                 'choices'  => array('apt' => 'Appartment', 'hs' => 'House')
             ))
@@ -37,7 +37,7 @@ class AnnouncementType extends AbstractType
             ->add('content')
             ->add('activate')
             ->add('user', 'entity',[
-                "expanded"=>true,
+                "expanded"=>false,
                 'class' => 'BackBundle:User',
                 'choice_label' => 'pseudo',
 

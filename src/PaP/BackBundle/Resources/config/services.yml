@@ -1,23 +1,9 @@
 services:
-#Service qui crée le formulaire
-    announcement_form:
-        factory_service: form.factory
-        factory_method: createNamed
-        class:  Symfony\Component\Form\Form
-        arguments:
-            #nom et type
-            - announcement
-            - announcement_form
 
-#Creer un service pour le Type
-    announcement_type:
-        class: PaP\BackBundle\Form\AnnouncementType
-        tags:
-            - {name: form.type, alias: announcement_form }
-
+# Announcement Handler Service
     announcement_handler:
         class: PaP\BackBundle\Form\Handler\AnnouncementHandler
-        arguments: [@announcement_form, @request, @doctrine.orm.entity_manager]
+        arguments: [@form.factory, @request, @doctrine.orm.entity_manager]
         scope: request
 
 

@@ -18,7 +18,7 @@ back_announcement_create:
         method: GET|POST
 
 back_announcement_edit:
-    path:     /edit/{id}
+    path:     /edit/{offer}
     defaults: { _controller: BackBundle:Announcement:edit }
     requirements:
         id: \d+

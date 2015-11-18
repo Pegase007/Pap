@@ -53,7 +53,7 @@ class Announcement
      * )
      *
      * @Assert\NotBlank(message="Please enter a price")
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="float")
      */
     protected $price;
 
@@ -74,7 +74,7 @@ class Announcement
      *     allowPortrait = false
      * )
      */
-    private $file;
+    protected $file;
 
 
 
@@ -862,7 +862,7 @@ class Announcement
      *
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file = null)
+    public function setFile(UploadedFile $file)
     {
         $this->file = $file;
     }
@@ -879,9 +879,12 @@ class Announcement
 
     public function upload()
     {
+
+
+
         // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
-            return;
+            return "";
         }
 
         // use the original file name here but you should
@@ -899,5 +902,7 @@ class Announcement
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
+
+
     }
 }
