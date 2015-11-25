@@ -9,16 +9,19 @@
 
     {% block stylesheets %}
 
-        ￼￼
+￼￼    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
     ￼ <link rel='stylesheet' type='text/css' href='{{ asset("bundles/back/css/theme.css") }}'>
     ￼￼￼￼￼￼
-    <!-- Font CSS (Via CDN) -->
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
-
+        <!-- Font CSS (Via CDN) -->
+        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
 
     {% endblock %}
 
 </head>
+
+
+
 
 <body class="blank-page">
 
@@ -40,24 +43,21 @@
 
         <!-- Start: Topbar-Dropdown -->
         {% include 'BackBundle:Partials:userdropdown.html.twig'%}
-
-
-
         <!-- End: Topbar-Dropdown -->
+
 
         <!-- Start: Topbar -->
         {% include 'BackBundle:Partials:breadcrumbbar.html.twig'%}
-
         <!-- End: Topbar -->
+
 
         <!-- Begin: Content -->
         <section id="content" class="animated fadeIn">
-
             {% block content %}
             {% endblock %}
-
         </section>
         <!-- End: Content -->
+
 
     </section>
 
@@ -86,6 +86,9 @@
 
         // Init Theme Core
         Core.init();
+
+        // launch initialisation
+        Demo.init();
 
 
     });

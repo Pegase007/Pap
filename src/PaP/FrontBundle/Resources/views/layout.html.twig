@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AbsoluteAdmin - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AbsoluteAdmin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+    {% block stylesheets %}
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/skin/default_skin/css/theme.css') }}">
+
+    <!-- Admin Forms CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin-tools/admin-forms/css/admin-forms.css') }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    {% endblock %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="external-page sb-l-c sb-r-c">
+
+    <!-- Start: Main -->
+    <div id="main" class="animated fadeIn">
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+
+            <!-- Begin: Animated Canvas BG -->
+            <div id="canvas-wrapper">
+                <canvas id="demo-canvas"></canvas>
+            </div>
+
+            <!-- Begin: Content -->
+            <section id="content">
+                {% block content %}
+                {% endblock %}
+            </section>
+        </section>
+
+    </div>
+
+    {% block javascripts %}
+
+        <!-- jQuery -->
+        <script src="{{ asset('vendor/jquery/jquery-1.11.1.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery/jquery_ui/jquery-ui.min.js') }}"></script>
+
+        <!-- Countdown Plugin -->
+        <script src="{{ asset('vendor/plugins/countdown/jquery.plugin.min.js') }}"></script>
+        <script src="{{ asset('vendor/plugins/countdown/jquery.plugin.min.js') }}"></script>
+        <script src="{{ asset('vendor/plugins/countdown/jquery.countdown.min.js') }}"></script>
+
+        <!-- CanvasBG Plugin(creates mousehover effect) -->
+        <script src="{{ asset('vendor/plugins/canvasbg/canvasbg.js') }}"></script>
+
+        <!-- Theme Javascript -->
+        <script src="{{ asset('assets/js/utility/utility.js') }}"></script>
+        <script src="{{ asset('assets/js/demo/demo.js') }}"></script>
+        <script src="{{ asset('assets/js/main.js') }}"></script>
+    {% endblock %}
+
+    <!-- Page Javascript -->
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+            // Init CanvasBG and pass target starting location
+            CanvasBG.init({
+                Loc: {
+                    x: window.innerWidth / 10,
+                    y: window.innerHeight / 20
+                },
+            });
+
+            // Init Countdown Plugin
+            var newYear = new Date();
+            newYear = new Date(2015, 12, 25);
+            $('#counter').countdown({
+                until: newYear
+            });
+
+            // For further documentation, settings, and examples
+            // see http://keith-wood.name/countdownRef.html
+
+        });
+    </script>
+
+</body>
+</html>

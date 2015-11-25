@@ -500,6 +500,7 @@ var Demo = function() {
   }
 
   var runFullscreenDemo = function() {
+    console.log('okay');
 
     // If browser is IE we need to pass the fullsreen plugin the 'html' selector
     // rather than the 'body' selector. Fixes a fullscreen overflow bug

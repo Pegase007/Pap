@@ -4,17 +4,17 @@ security:
 
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
             memory:
                 users:
-                  admin:  { password: admin, roles: ['ROLE_ADMIN'] }
+                  admin:  { password: $2a$12$MKZADm5kwM2iNWa6MJv4JOFWGCXFOerQNRjiuNaix0s2EknmNN0Qy, roles: ['ROLE_ADMIN'] }
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
     firewalls:
 
         secured_area:
