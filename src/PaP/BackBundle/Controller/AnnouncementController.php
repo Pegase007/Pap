@@ -23,15 +23,19 @@ class AnnouncementController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $offers=$em->getRepository("BackBundle:Announcement")
-            ->getAllByCriteria();
+        $offers = $em->getRepository("BackBundle:Announcement")->getAllByCriteria();
 
-        return $this->render("BackBundle:Announcement:index.html.twig",["offers"=>$offers]);
-
+        return $this->render("BackBundle:Announcement:index.html.twig",["offers" => $offers]);
     }
 
 
-
+    /**
+     *
+     * 
+     *
+     * @param Announcement $offer
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showAction(Announcement $offer)
     {
 

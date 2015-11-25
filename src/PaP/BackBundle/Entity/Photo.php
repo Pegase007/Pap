@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="photo")
  * @ORM\Entity(repositoryClass="PaP\BackBundle\Repository\PhotoRepository")
- * @ORM\HasLifeCycleCallbacks
  */
 class Photo
 {
@@ -39,7 +38,6 @@ class Photo
      * @ORM\Column(name="fath", type="string", length=255)
      */
     protected $path;
-
 
     /**
      *
