@@ -1,0 +1,232 @@
+
+{#{% for message in app.session.flashbag.get("success") %}#}
+
+    {#<div class="alert alert-success alert-dismissable">#}
+        {#<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>#}
+        {#<h4>	<i class="icon fa fa-check"></i> Yay!</h4>#}
+        {#{{ message }}#}
+    {#</div>#}
+
+{#{% endfor %}#}
+
+
+
+        {{ form_start(form,{'attr':{novalidate:"novalidate", enctype: "multipart/form-data"}}) }}
+        <div class="panel-body bg-light">
+
+            <div class="section-divider mt20 mb40">
+                <span> New Announcement </span>
+            </div>
+            {{ form_errors(form) }}
+
+            <!-- .section-divider -->
+
+
+            <div class="section row" id="spy1">
+                <div class="col-md-12">
+
+
+                    <label for="{{ form.title.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.title.vars.id }}" name="{{ form.title.vars.full_name }}"  class="gui-input" placeholder="{{ form.title.vars.name }}..." value="{{ form.title.vars.value }}">
+                        <label for="{{ form.title.vars.id }}" class="field-icon">
+                            <i class="fa fa-user"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.title) -}}
+                </div>
+                <!-- end section -->
+            </div>
+            <div class="section row" id="spy1">
+                <div class="col-md-6">
+                    <label for="{{ form.price.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.price.vars.id }}" name="{{ form.price.vars.full_name }}" id="{{ form.price.vars.id }}" class="gui-input" placeholder="{{ form.price.vars.name }}..." value="{{ form.price.vars.value }}">
+                        <label for="{{ form.price.vars.id }}" class="field-icon">
+                            <i class="fa fa-usd"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.price) -}}
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="{{ form.ref.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.ref.vars.id }}" name="{{ form.ref.vars.full_name }}" id="{{ form.ref.vars.id }}" class="gui-input" placeholder="{{ form.ref.vars.name }}..." value="{{ form.ref.vars.value }}">
+                        <label for="{{ form.ref.vars.id }}" class="field-icon">
+                            <i class="fa fa-list-ol"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.ref) -}}
+                </div>
+
+                <!-- end section -->
+            </div>
+            <!-- end .section row section -->
+
+            <div class="section row" id="spy1">
+                <div class="col-md-12">
+
+                    <label for="{{ form.address.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.address.vars.id }}" name="{{ form.address.vars.full_name }}" id="{{ form.address.vars.id }}" class="gui-input" placeholder="{{ form.address.vars.name }}..." value="{{ form.address.vars.value }}">
+                        <label for="{{ form.address.vars.id }}" class="field-icon">
+                            <i class="fa fa-building"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.address) -}}
+                </div>
+                <!-- end section -->
+            </div>
+            <div class="section row" id="spy1">
+                <div class="col-md-4">
+                    <label for="{{ form.city.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.city.vars.id }}" name="{{ form.city.vars.full_name }}" id="{{ form.city.vars.id }}" class="gui-input" placeholder="{{ form.city.vars.name }}..." value="{{ form.city.vars.value }}">
+                        <label for="{{ form.city.vars.id }}" class="field-icon">
+                            <i class="fa fa-location-arrow"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.city) -}}
+                </div>
+
+
+                <div class="col-md-4">
+                    <label for="{{ form.cp.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.cp.vars.id }}" name="{{ form.cp.vars.full_name }}" id="{{ form.cp.vars.id }}" class="gui-input" placeholder="{{ form.cp.vars.name }}..." value="{{ form.cp.vars.value }}">
+                        <label for="{{ form.cp.vars.id }}" class="field-icon">
+                            <i class="fa fa-location-arrow"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.cp) -}}
+                </div>
+
+                <div class="col-md-4">
+                    <label for="{{ form.country.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.country.vars.id }}" name="{{ form.country.vars.full_name }}" id="{{ form.country.vars.id }}" class="gui-input" placeholder="{{ form.country.vars.name }}..." value="{{ form.country.vars.value }}">
+                        <label for="{{ form.country.vars.id }}" class="field-icon">
+                            <i class="fa fa-location-arrow"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.country) -}}
+                </div>
+
+                <!-- end section -->
+            </div>
+
+
+            <div class="section row" id="spy1">
+                <div class="col-md-10">
+                    <label class="field select">
+
+                        {{ form_widget(form.type) }}
+
+                        <i class="arrow double"></i>
+                    </label>
+                    {{- form_errors(form.type) -}}
+                </div>
+                <div class="col-md-2">
+                    <label class="field select">
+                       {{ form_widget(form.energyLabel) }}
+                        <i class="arrow double"></i>
+                    </label>
+                    {{- form_errors(form.energyLabel) -}}
+                </div>
+
+            </div>
+            <!-- end section -->
+
+            <div class="section row" id="spy1">
+                <div class="col-md-4">
+                    <label for="{{ form.surface.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.surface.vars.id }}" name="{{ form.surface.vars.full_name }}" id="{{ form.surface.vars.id }}" class="gui-input" placeholder="{{ form.surface.vars.name }}..." value="{{ form.surface.vars.value }}">
+                        <label for="{{ form.surface.vars.id }}" class="field-icon">
+                            <i class="fa fa-home"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.surface) -}}
+                </div>
+
+
+                <div class="col-md-4">
+                    <label for="{{ form.nbrooms.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.nbrooms.vars.id }}" name="{{ form.nbrooms.vars.full_name }}" id="{{ form.nbrooms.vars.id }}" class="gui-input" placeholder="{{ form.nbrooms.vars.name }}..." value="{{ form.nbrooms.vars.value }}">
+                        <label for="{{ form.nbrooms.vars.id }}" class="field-icon">
+                            <i class="fa fa-home"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.nbrooms) -}}
+                </div>
+
+                <div class="col-md-4">
+                    <label for="{{ form.bedrooms.vars.id }}" class="field prepend-icon">
+                        <input type="text" id="{{ form.bedrooms.vars.id }}" name="{{ form.bedrooms.vars.full_name }}" id="{{ form.bedrooms.vars.id }}" class="gui-input" placeholder="{{ form.bedrooms.vars.name }}..." value="{{ form.bedrooms.vars.value }}">
+                        <label for="{{ form.bedrooms.vars.id }}" class="field-icon">
+                            <i class="fa fa-bed"></i>
+                        </label>
+                    </label>
+                    {{- form_errors(form.bedrooms) -}}
+                </div>
+
+                <!-- end section -->
+            </div>
+
+
+
+            <div class="section" id="spy2">
+                <label for="file1" class="field file">
+                    {% if  offer.photo != "" %}
+                    <img class="img-responsive img-circle" src="{{ asset("uploads/announcement/" ~ offer.photo) }}" style="width: 50px; height: 50px" />
+                    {% endif %}
+
+                    <span class="button btn-primary"> Choose File </span>
+
+                    {{- form_widget(form.file, {'attr': {'class' : 'gui-file', 'id': 'file1','onChange':"document.getElementById('uploader1').value = this.value"}}) -}}
+                    <input type="text" class="gui-input" id="uploader1" placeholder="no file selected" value="{{ form.file.vars.value }}" readonly>
+                </label>
+            </div>
+            <!-- end  section -->
+
+            <!-- end  section -->
+
+            <div class="section" id="spy3">
+                <label for="{{ form.content.vars.id }}" class="field prepend-icon">
+                    <label for="comment" class="field prepend-icon">
+
+                        <textarea class="gui-textarea" id="{{ form.content.vars.id }}" name="{{ form.content.vars.full_name }}" placeholder="Your announcement ...">{{ form.content.vars.value }}</textarea>
+
+                    </label>
+                </label>
+            </div>
+            <!-- end section -->
+
+            <div class="col-md-6 pl40">
+                <div class="option-group field">
+
+                    <label class="block mt15 option option-primary">
+                        <input type="checkbox" name="{{ form.activate.vars.full_name }}" value="{{ form.activate.vars.value }}">
+                        <span class="checkbox"></span> Activate
+                    </label>
+
+                </div>
+            </div>
+
+
+            <!-- .section-divider -->
+
+            <div class="section row" id="spy1">
+                <div class="col-md-12">
+
+
+                </div>
+                <!-- end section -->
+            </div>
+
+
+            <!-- end .form-body section -->
+            <div class="panel-footer text-right">
+                <button type="submit" class="button btn-primary"> Validate Form </button>
+            </div>
+            <!-- end .form-footer section -->
+            {{ form_widget(form._token) }}
+
+        </div>
+            </form>
+
+

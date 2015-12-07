@@ -16,7 +16,7 @@ class AnnouncementRepository extends \Doctrine\ORM\EntityRepository
 
 
         $query = $this->createQueryBuilder("an")
-            ->select( 'an.id','an.title','an.ref','an.price', 'an.photo')
+            ->select( 'an.id','an.title','an.ref','an.price', 'an.photo', 'an.activate')
             ->orderBy("an.{$order}", "{$dir}")
             ->getQuery();
 

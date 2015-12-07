@@ -1,0 +1,17 @@
+
+back_comments:
+    path:     /
+    defaults: { _controller: BackBundle:Comments:index }
+
+back_comment_activate:
+    path:     /activate/{id}/{action}
+    defaults: { _controller: BackBundle:Comments:activate }
+
+back_comment_edit:
+    path:     /edit/{id}
+    defaults: { _controller: BackBundle:Comments:edit }
+
+back_comment_delete:
+    path:     /delete/{id}/{prodId}
+    defaults: { _controller: BackBundle:Comments:delete }
+

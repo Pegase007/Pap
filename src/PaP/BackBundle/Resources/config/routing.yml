@@ -9,3 +9,8 @@ back_homepage:
 back_announcements:
     resource: "@BackBundle/Resources/config/routing/announcement.yml"
     prefix: /announcement
+
+back_comments:
+    resource: "@BackBundle/Resources/config/routing/comments.yml"
+    prefix: /comments
+

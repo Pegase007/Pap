@@ -25,10 +25,10 @@ class AnnouncementHandler
      * @param Request $request
      * @param EntityManager $em
      */
-    public function __construct(FormFactory $form, Request $request, EntityManager $em)
+    public function __construct(FormFactory $formfact, Request $request, EntityManager $em)
     {
-        $this->formfactory = $form;
-        $this->request=$request;
+        $this->formfactory = $formfact;
+        $this->request= $request;
         $this->em= $em;
 
     }
@@ -67,14 +67,14 @@ class AnnouncementHandler
         return $this->form;
     }
 
-    /**
-     *
-     * @return Form
-     */
-    public function setForm($form)
-    {
-        $this->form = $form;
-    }
+//    /**
+//     *
+//     * @return Form
+//     */
+//    public function setForm($form)
+//    {
+//        $this->form = $form;
+//    }
 
     /*
      * Handle storing to database
@@ -95,6 +95,37 @@ class AnnouncementHandler
     {
 
         $this->form = $this->formfactory->create(new AnnouncementType(), $offer);
+
+    }
+
+    public function activate(Announcement $offer, $action)
+    {
+
+        $announcement = $this->em->getRepository('BackBundle:Announcement')->find($id);
+
+
+        if($action == "activate")
+        {
+
+            $announcement->setActivate(1);
+
+        }
+        else
+        {
+            $announcement->setActivate(0);
+
+        }
+
+        $em->persist($announcement);
+        $em->flush();
+
+        if ($request->isXmlHttpRequest())
+        {
+            return new JsonResponse([]);
+        }
+
+        return $this->redirectToRoute("back_announcement_index");
+
 
     }
 

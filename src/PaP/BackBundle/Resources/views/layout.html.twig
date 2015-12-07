@@ -11,7 +11,7 @@
 
 ￼￼    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    ￼ <link rel='stylesheet' type='text/css' href='{{ asset("bundles/back/css/theme.css") }}'>
+    ￼ <link rel='stylesheet' type='text/css' href='{{ asset("dist/css/main.min.css") }}'>
     ￼￼￼￼￼￼
         <!-- Font CSS (Via CDN) -->
         <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
@@ -29,12 +29,12 @@
 <div id="main">
 
     <!-- Start: Header -->
-    {% include 'BackBundle:Partials:header.html.twig'%}
+    {% include 'BackBundle:Partials:_header.html.twig'%}
     <!-- End: Header -->
 
     <!-- Start: Sidebar -->
 
-    {% include 'BackBundle:Partials:navbar.html.twig'%}
+    {% include 'BackBundle:Partials:_navbar.html.twig'%}
 
 
     <!-- Start: Content-Wrapper -->
@@ -42,12 +42,12 @@
 
 
         <!-- Start: Topbar-Dropdown -->
-        {% include 'BackBundle:Partials:userdropdown.html.twig'%}
+        {% include 'BackBundle:Partials:_userdropdown.html.twig'%}
         <!-- End: Topbar-Dropdown -->
 
 
         <!-- Start: Topbar -->
-        {% include 'BackBundle:Partials:breadcrumbbar.html.twig'%}
+        {% include 'BackBundle:Partials:_breadcrumbbar.html.twig'%}
         <!-- End: Topbar -->
 
 
@@ -62,7 +62,7 @@
     </section>
 
     <!-- Start: Right Sidebar -->
-    {% include 'BackBundle:Partials:rightsidebar.html.twig'%}
+    {% include 'BackBundle:Partials:_rightsidebar.html.twig'%}
     <!-- End: Right Sidebar -->
 
 </div>
@@ -89,6 +89,8 @@
 
         // launch initialisation
         Demo.init();
+
+
 
 
     });

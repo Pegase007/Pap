@@ -1,0 +1,145 @@
+{% extends "UserBundle::securitylayout.html.twig" %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+
+            <div class="admin-form theme-primary mw600" style="margin-top: 3%;" id="register">
+
+                <!-- Registration Logo -->
+                <div class="row table-layout">
+                    <a href="dashboard.html" title="Return to Dashboard">
+                        <img src="assets/img/logos/logo.png" title="AdminDesigns Logo" class="center-block img-responsive" style="max-width: 275px;">
+                    </a>
+                </div>
+
+                <!-- Registration Panel/Form -->
+                <div class="panel mt40">
+
+                    <form method="POST" action="" id="contact">
+                        {{ form_errors(form) }}
+
+                        <div class="panel-body bg-light p25 pb15">
+
+                        {{ form_widget(form) }}
+
+                            <div class="section row">
+                                <div class="col-md-6">
+                                    <label for="firstname" class="field prepend-icon">
+                                        <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="First name...">
+                                        <label for="firstname" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- end section -->
+
+                                <div class="col-md-6">
+                                    <label for="lastname" class="field prepend-icon">
+                                        <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                                        <label for="lastname" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- end section -->
+                            </div>
+                            <!-- end .section row section -->
+
+                            <div class="section">
+                                <label for="email" class="field prepend-icon">
+                                    <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
+                                    <label for="email" class="field-icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <!-- end section -->
+
+                            <div class="section hidden">
+                                <div class="smart-widget sm-right smr-120">
+                                    <label for="username" class="field prepend-icon">
+                                        <input type="text" name="username" id="username" class="gui-input" placeholder="Choose your username">
+                                        <label for="username" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                    <label for="username" class="button">.envato.com</label>
+                                </div>
+                                <!-- end .smart-widget section -->
+                            </div>
+                            <!-- end section -->
+
+
+                            <hr class="alt short">
+
+                            <div class="section">
+                                <label for="password" class="field prepend-icon">
+                                    <input type="password" name="password" id="password" class="gui-input" placeholder="Create a password">
+                                    <label for="password" class="field-icon">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <!-- end section -->
+
+                            <div class="section">
+                                <label for="confirmPassword" class="field prepend-icon">
+                                    <input type="password" name="confirmPassword" id="confirmPassword" class="gui-input" placeholder="Retype your password">
+                                    <label for="confirmPassword" class="field-icon">
+                                        <i class="fa fa-lock"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <!-- end section -->
+
+
+                        </div>
+
+                        <div class="panel-footer clearfix">
+                            <button type="submit" class="button btn-primary mr10 pull-right">Register</button>
+
+                            <label class="option block mt10">
+                                <input type="checkbox" name="terms">
+                                <span class="checkbox"></span>I agree to the
+                                <a href="#" class="theme-link"> terms of use. </a>
+                            </label>
+
+                            <label class="switch block switch-primary mt10 hidden">
+                                <input type="checkbox" name="remember" id="remember" checked>
+                                <label for="remember" data-on="YES" data-off="NO"></label>
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+                <!-- Registration Links -->
+                <div class="login-links">
+                    <p>
+                        <a href="pages_forgotpw(alt).html" class="active hidden" title="Sign In">Forgot Password?</a>
+                    </p>
+                    <p>Already registered?
+                        <a href="pages_login(alt).html" class="active" title="Sign In">Sign in here</a>
+                    </p>
+                </div>
+
+
+            </div>
+
+        </section>
+        <!-- End: Content -->
+
+    {{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
+
+    <button type="submit">Register!</button>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -27,11 +27,7 @@ var myReporter = map(function (file, cb) {
 gulp.task('js', function() 
 {
   return gulp.src('web/js/*.js')    // Prend en entrée les fichiers *.src.js
-    .pipe(rename(function(path){
-      // Il y a différentes méthodes pour renommer les fichiers
-      // Voir ici pour plus d'infos : https://www.npmjs.org/package/gulp-rename
-      path.basename = path.basename.replace(".src", ".min");
-    }))
+
     .pipe(jshint())
     .pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.min.js'))

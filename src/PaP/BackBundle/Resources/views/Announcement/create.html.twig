@@ -3,284 +3,26 @@
 {% block title "Annoucement Create" %}
 
 {%  block stylesheets %}
-    {{ parent() }}
-    <!-- Theme CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset("bundles/back/css/theme.css") }}">
+ {{ parent() }}
 
-    <!-- Admin Forms CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset("bundles/back/css/admin-forms.css") }}">
+    ￼￼    <link rel="stylesheet" href="{{asset('vendor/plugins/select2/css/core.css')}}">
+
 
 {% endblock %}
 
+
 {% block content %}
 
-{% for message in app.session.flashbag.get("success") %}
-
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>	<i class="icon fa fa-check"></i> Yay!</h4>
-            {{ message }}
-        </div>
-
-    {% endfor %}
-
-{#{{ dump (formOffer.type ) }}#}
     <div class="admin-form theme-primary mw1000 center-block" style="padding-bottom: 175px;">
 
         <div class="panel heading-border">
 
-            {{ form_start(formOffer,{'attr':{novalidate:"novalidate", enctype: "multipart/form-data"}}) }}
-            <div class="panel-body bg-light">
+            {% include 'BackBundle:Announcement:_form.html.twig'%}
 
-                <div class="section-divider mt20 mb40">
-                    <span> New Announcement </span>
-                </div>
-                            {{ form_errors(formOffer) }}
-
-                <!-- .section-divider -->
-
-                <div class="section">
-                      <label class="field select-multiple">
-                        <select name="{{ formOffer.user.vars.full_name }}" id="{{ formOffer.user.vars.id }}" multiple="" value="{{ formOffer.user.vars.value }}">
-                          {% for user in formOffer.user.children %}
-                          <option value="{{ user.vars.value }}">{{ user.vars.label }} </option>
-                         {% endfor %}
-                        </select>
-                      </label>
-                      {{ form_errors(formOffer.user) }}
-
-                    </div>
-
-                <div class="section row" id="spy1">
-                    <div class="col-md-12">
-
-
-                        {#{{ dump(formOffer.title) }}#}
-                        {#{{ dump(form(formOffer.title)) }}#}
-
-                        <label for="{{ formOffer.title.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.title.vars.id }}" name="{{ formOffer.title.vars.full_name }}"  class="gui-input" placeholder="{{ formOffer.title.vars.name }}..." value="{{ formOffer.title.vars.value }}">
-                            <label for="{{ formOffer.title.vars.id }}" class="field-icon">
-                                <i class="fa fa-user"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.title) -}}
-                    </div>
-                    <!-- end section -->
-                </div>
-                <div class="section row" id="spy1">
-                    <div class="col-md-6">
-                        <label for="{{ formOffer.price.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.price.vars.id }}" name="{{ formOffer.price.vars.full_name }}" id="{{ formOffer.price.vars.id }}" class="gui-input" placeholder="{{ formOffer.price.vars.name }}..." value="{{ formOffer.price.vars.value }}">
-                            <label for="{{ formOffer.price.vars.id }}" class="field-icon">
-                                <i class="fa fa-usd"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.price) -}}
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <label for="{{ formOffer.ref.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.ref.vars.id }}" name="{{ formOffer.ref.vars.full_name }}" id="{{ formOffer.ref.vars.id }}" class="gui-input" placeholder="{{ formOffer.ref.vars.name }}..." value="{{ formOffer.ref.vars.value }}">
-                            <label for="{{ formOffer.ref.vars.id }}" class="field-icon">
-                                <i class="fa fa-list-ol"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.ref) -}}
-                    </div>
-
-                    <!-- end section -->
-                </div>
-                <!-- end .section row section -->
-
-                <div class="section row" id="spy1">
-                    <div class="col-md-12">
-
-                        <label for="{{ formOffer.address.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.address.vars.id }}" name="{{ formOffer.address.vars.full_name }}" id="{{ formOffer.address.vars.id }}" class="gui-input" placeholder="{{ formOffer.address.vars.name }}..." value="{{ formOffer.address.vars.value }}">
-                            <label for="{{ formOffer.address.vars.id }}" class="field-icon">
-                                <i class="fa fa-building"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.address) -}}
-                    </div>
-                    <!-- end section -->
-                </div>
-                <div class="section row" id="spy1">
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.city.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.city.vars.id }}" name="{{ formOffer.city.vars.full_name }}" id="{{ formOffer.city.vars.id }}" class="gui-input" placeholder="{{ formOffer.city.vars.name }}..." value="{{ formOffer.city.vars.value }}">
-                            <label for="{{ formOffer.city.vars.id }}" class="field-icon">
-                                <i class="fa fa-location-arrow"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.city) -}}
-                    </div>
-
-
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.cp.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.cp.vars.id }}" name="{{ formOffer.cp.vars.full_name }}" id="{{ formOffer.cp.vars.id }}" class="gui-input" placeholder="{{ formOffer.cp.vars.name }}..." value="{{ formOffer.cp.vars.value }}">
-                            <label for="{{ formOffer.cp.vars.id }}" class="field-icon">
-                                <i class="fa fa-location-arrow"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.cp) -}}
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.country.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.country.vars.id }}" name="{{ formOffer.country.vars.full_name }}" id="{{ formOffer.country.vars.id }}" class="gui-input" placeholder="{{ formOffer.country.vars.name }}..." value="{{ formOffer.country.vars.value }}">
-                            <label for="{{ formOffer.country.vars.id }}" class="field-icon">
-                                <i class="fa fa-location-arrow"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.country) -}}
-                    </div>
-
-                    <!-- end section -->
-                </div>
-
-
-                <div class="section row" id="spy1">
-                    <div class="col-md-10">
-                        <label class="field select">
-                            <select id="{{ formOffer.type.vars.id }}" name="{{ formOffer.type.vars.full_name }}">
-                                <option value="">Type...</option>
-                                {% for type in formOffer.type.vars.choices %}
-                                <option value="{{ type.value }}">{{ type.label }}</option>
-                                {% endfor %}
-                            </select>
-                            <i class="arrow double"></i>
-                        </label>
-                        {{- form_errors(formOffer.type) -}}
-                    </div>
-                    {#{{ dump(formOffer.energyLabel) }}#}
-                    <div class="col-md-2">
-                         <label class="field select">
-                            <select id="{{ formOffer.energyLabel.vars.id }}" name="{{ formOffer.energyLabel.vars.full_name }}">
-                                <option value="">Energy...</option>
-                                {% for energy in formOffer.energyLabel.vars.choices %}
-                                <option value="{{ energy.value }}">{{ energy.label }}</option>
-                                {% endfor %}
-                            </select>
-                            <i class="arrow double"></i>
-                        </label>
-                        {{- form_errors(formOffer.energyLabel) -}}
-                    </div>
-
-                </div>
-                <!-- end section -->
-
-                <div class="section row" id="spy1">
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.surface.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.surface.vars.id }}" name="{{ formOffer.surface.vars.full_name }}" id="{{ formOffer.surface.vars.id }}" class="gui-input" placeholder="{{ formOffer.surface.vars.name }}..." value="{{ formOffer.surface.vars.value }}">
-                            <label for="{{ formOffer.surface.vars.id }}" class="field-icon">
-                                <i class="fa fa-home"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.surface) -}}
-                    </div>
-
-
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.nbrooms.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.nbrooms.vars.id }}" name="{{ formOffer.nbrooms.vars.full_name }}" id="{{ formOffer.nbrooms.vars.id }}" class="gui-input" placeholder="{{ formOffer.nbrooms.vars.name }}..." value="{{ formOffer.nbrooms.vars.value }}">
-                            <label for="{{ formOffer.nbrooms.vars.id }}" class="field-icon">
-                                <i class="fa fa-home"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.nbrooms) -}}
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="{{ formOffer.bedrooms.vars.id }}" class="field prepend-icon">
-                            <input type="text" id="{{ formOffer.bedrooms.vars.id }}" name="{{ formOffer.bedrooms.vars.full_name }}" id="{{ formOffer.bedrooms.vars.id }}" class="gui-input" placeholder="{{ formOffer.bedrooms.vars.name }}..." value="{{ formOffer.bedrooms.vars.value }}">
-                            <label for="{{ formOffer.bedrooms.vars.id }}" class="field-icon">
-                                <i class="fa fa-bed"></i>
-                            </label>
-                        </label>
-                        {{- form_errors(formOffer.bedrooms) -}}
-                    </div>
-
-                    <!-- end section -->
-                </div>
-
-
-                <div class="section" id="spy2">
-                    <label for="file1" class="field file">
-                        <span class="button btn-primary"> Choose File </span>
-                        {{- form_widget(formOffer.file, {'attr': {'class' : 'gui-file', 'id': 'file1'}}) -}}
-                        <input type="text" class="gui-input" id="uploader1" placeholder="no file selected" readonly>
-                    </label>
-                </div>
-                <!-- end  section -->
-
-                                <!-- end  section -->
-
-                <div class="section" id="spy3">
-                    <label for="{{ formOffer.content.vars.id }}" class="field prepend-icon">
-                    <label for="comment" class="field prepend-icon">
-
-                        <textarea class="gui-textarea" id="{{ formOffer.content.vars.id }}" name="{{ formOffer.content.vars.full_name }}" placeholder="Your announcement ..." value="{{ formOffer.content.vars.value }}"></textarea>
-
-                    </label>
-                </div>
-                <!-- end section -->
-
-                <div class="col-md-6 pl40">
-                        <div class="option-group field">
-
-                          <label class="block mt15 option option-primary">
-                            <input type="checkbox" name="{{ formOffer.activate.vars.full_name }}" value="{{ formOffer.activate.vars.value }}">
-                            <span class="checkbox"></span> Activate
-                          </label>
-
-                        </div>
-                      </div>
-
-
-            {#{{ form_row(formOffer.photo) }}#}
-                <!-- .section-divider -->
-
-                   {#{{ dump(formOffer.options)  }}#}
-                   <div class="section row" id="spy1">
-                    <div class="col-md-12">
-
-
-                            {#{{ form_label(formOffer.options) }}#}
-                            {#{{ form_widget(formOffer.options) }}#}
-                            {#{{ form_errors(formOffer.options) }}#}
-                        {#<label for="{{ formOffer.options.vars.id }}" class="field prepend-icon">#}
-                            {#<input type="text" id="{{ formOffer.options.vars.id }}" name="{{ formOffer.options.vars.full_name }}"  class="gui-input" placeholder="Options...">#}
-                            {#<label for="{{ formOffer.options.vars.id }}" class="field-icon">#}
-                                {#<i class="fa fa-th"></i>#}
-                            {#</label>#}
-                        {#</label>#}
-
-                        {#{{- form_errors(formOffer.options) -}}#}
-                    </div>
-                    <!-- end section -->
-                </div>
-
-
-            <!-- end .form-body section -->
-            <div class="panel-footer text-right">
-                <button type="submit" class="button btn-primary"> Validate Form </button>
-            </div>
-            <!-- end .form-footer section -->
-            {{ form_widget(formOffer._token) }}
-
-      </form>
 
         </div>
 
     </div>
-
-    {#{{ form(formOffer) }}#}
-
 
 {% endblock %}
 
@@ -296,5 +38,9 @@
     <script src="{{ asset("bundles/back/js/additional-methods.min.js") }}"></script>
 
 
+   <script src="{{asset('vendor/plugins/select2/select2.min.js')}}"></script>
+   <script src="{{asset('dist/js/main.min.js')}}"></script>
 
 {% endblock%}
+
+

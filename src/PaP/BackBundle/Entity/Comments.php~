@@ -1,0 +1,91 @@
+<?php
+
+namespace PaP\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * Comments
+ *
+ * @ORM\Table(name="comments")
+ * @ORM\Entity(repositoryClass="PaP\BackBundle\Repository\CommentsRepository")
+ */
+class Comments
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var string
+     *
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+
+    /**
+     * @var string
+     *
+     * @Assert\Length(
+     *    min = 2,
+     *    minMessage = "Your first name must be at least {{ limit }} characters long",
+     *)
+     *
+     * @Assert\NotBlank() (message="Must not be empty")
+     *
+     * @ORM\Column(name="user", type="string", length=100)
+     */
+    private $user;
+
+    /**
+     * @var \DateTime
+     *
+     * @Assert\NotBlank() (message="Must not be empty")
+     * @ORM\Column(name="date_created", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var integer
+     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      maxMessage = "The higher mark must be 5"
+     * )
+     *
+     * @ORM\Column(name="mark", type="integer")
+     */
+    private $mark;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="activate", type="boolean")
+     */
+    private $activate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Announcement", inversedBy="comments")
+     * @ORM\JoinColumn(name="announcement_id", referencedColumnName="id", nullable=false)
+     */
+    private $announcement;
+
+
+
+    public function __construct()
+    {
+        $this->dateCreated= new \DateTime("now");
+        $this->activate=false;
+
+
+    }
+}
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>{% block title %}  {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block stylesheets %}
+
+        ￼ <link rel='stylesheet' type='text/css' href='{{ asset("dist/css/main.min.css") }}'>
+
+        ￼￼￼￼￼￼
+        <!-- Font CSS (Via CDN) -->
+        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    {% endblock %}
+
+</head>
+
+<body class="external-page external-alt sb-l-c sb-r-c">
+
+<!-- Start: Main -->
+<div id="main" class="animated fadeIn">
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- Begin: Content -->
+        <section id="content">
+
+{% block content %}
+{% endblock %}
+
+        </section>
+        <!-- End: Content-Wrapper -->
+
+</div>
+<!-- End: Main -->
+
+
+<!-- BEGIN: PAGE SCRIPTS -->
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Theme Javascript -->
+    <script src="{{ asset("bundles/back/js/utility/utility.js") }}"></script>
+    <script src="{{ asset("bundles/back/js/demo/demo.js") }}"></script>
+    <script src="{{ asset("bundles/back/js/main.js") }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+
+        });
+    </script>
+    <!-- END: PAGE SCRIPTS -->
+{% endblock %}
+
+
+<!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>

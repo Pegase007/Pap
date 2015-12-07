@@ -30,3 +30,7 @@ back_announcement_delete:
     requirements:
         id: \d+
         method: POST|DELETE
+
+back_announcement_activate:
+    path:     /activate/{id}/{action}
+    defaults: { _controller: BackBundle:Announcement:activate }

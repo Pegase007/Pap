@@ -25,23 +25,22 @@ class AnnouncementType extends AbstractType
             ->add('country')
             ->add('file', 'file', array('attr' => array('accept' => 'image/*')))
             ->add('type','choice', array(
+                'required'=> true,
+                'placeholder'=>'Type',
                 'choices'  => array('apt' => 'Appartment', 'hs' => 'House')
             ))
             ->add('energyLabel','choice', array(
-                'choices'  => array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G',)
+                'required'=> true,
+                'placeholder'=>'Label',
+                'attr' => array('class' => 'select2 select2-primary'),
+                'choices'  => array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G')
             ))
             ->add('surface')
             ->add('nbrooms')
             ->add('bedrooms')
             ->add('pricePerMeterSquare')
             ->add('content')
-            ->add('activate')
-            ->add('user', 'entity',[
-                "expanded"=>false,
-                'class' => 'BackBundle:User',
-                'choice_label' => 'pseudo',
-
-            ]);
+            ->add('activate');
 
 
 //           ->add('options', new OptionsType());

@@ -136,6 +136,7 @@ class Announcement
 
     /**
      * @var string
+     * @Assert\NotBlank(message="Please enter a valid type")
      * @Assert\Choice(choices = {"hs", "apt"}, message = "Choose a valid type.")
      * @ORM\Column(name="type", type="string", length=100, nullable=false)
      */
@@ -144,6 +145,7 @@ class Announcement
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Please enter a valid energy")
      * @Assert\Choice(choices = {"A", "B", "C", "D", "E", "F", "G"}, message = "Choose a valid type.")
      * @ORM\Column(name="energyLabel", type="string", length=100, nullable=false )
      */
@@ -234,19 +236,33 @@ class Announcement
 
 
     /**
-     * @Assert\NotBlank(message="Please choose a user")
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="user")
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", nullable=false)
-     *
-     */
-    protected $user;
-
-    /**
      *
      * @ORM\ManyToMany(targetEntity="Options", inversedBy="announcement",cascade={"persist"})
      * @ORM\JoinTable(name="Announcement_Options")
      */
     protected $options;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comments", mappedBy="announcement", cascade={"remove"})
+     */
+    private $comments;
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
 
     /**
      * construct method
@@ -744,29 +760,6 @@ class Announcement
         return $this->photo;
     }
 
-    /**
-     * Set user
-     *
-     * @param \PaP\BackBundle\Entity\User $user
-     *
-     * @return Announcement
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \PaP\BackBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 
     /**
      * Add option

@@ -10,17 +10,6 @@ var Demo = function() {
   // Demo AdminForm Functions
   var runDemoForms = function() {
 
-    // Prevents directory response when submitting a demo form
-    $('.admin-form').on('submit', function(e) {
-
-      if ($('body.timeline-page').length || $('body.admin-validation-page').length) {
-        return;
-      }
-      e.preventDefault;
-      alert('Your form has submitted!');
-      return false;
-    });
-
     // give file-upload preview onclick functionality
     var fileUpload = $('.fileupload-preview');
     if (fileUpload.length) {

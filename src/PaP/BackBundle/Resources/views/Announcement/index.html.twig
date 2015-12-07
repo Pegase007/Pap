@@ -24,6 +24,8 @@
                         <th class="">Title</th>
                         <th class="">Ref</th>
                         <th class="">Price</th>
+                        <th class="">Active</th>
+                        <th class=""></th>
 
                         <th class="text-right"></th>
 
@@ -46,6 +48,11 @@
                             <td class="">{{ offer.ref }}</td>
                             <td class="">{{ offer.price }}</td>
 
+                            <td class="text-center">
+
+                                <a href="{% if offer.activate %}{{ path("back_announcement_activate",{'id':offer.id,'action':"desactivate"} ) }}"><i class="fa fa-check"></i> {% else %}{{ path("back_announcement_activate",{'id':offer.id,'action':"activate"} ) }}"> <i class="fa fa-times"></i> {% endif  %}</a>
+
+                            </td>
 
                             <td class="menu-action">
 
@@ -62,6 +69,8 @@
                                 </a>
 
                             </td>
+
+
 
                         </tr>
                     {% endfor %}

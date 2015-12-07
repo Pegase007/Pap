@@ -4,29 +4,48 @@ security:
 
 
     encoders:
-        Symfony\Component\Security\Core\User\User:
+        Symfony\Component\Security\Core\User\User: plaintext
+        PaP\UserBundle\Entity\User:
             algorithm: bcrypt
-            cost: 12
+            cost: 15
 
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_USER]
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+
+        user_admin:
+            entity: { class: PaP\UserBundle\Entity\User }
+
         in_memory:
             memory:
-                users:
-                  admin:  { password: $2a$12$MKZADm5kwM2iNWa6MJv4JOFWGCXFOerQNRjiuNaix0s2EknmNN0Qy, roles: ['ROLE_ADMIN'] }
+                 users:
+                    admin: { password: admin, roles: ROLE_ADMIN }
+
+
+        chain_provider:
+            chain:
+                providers: [in_memory, user_admin]
+
 
     firewalls:
-
-        secured_area:
-            pattern:    ^/
+          secured_area:
+            pattern:    ^/back
+            security: true
+#            http_basic:
+#                realm: "Back Office"
+#                provider: in_memory
             form_login:
+                provider: user_admin
                 login_path: /login
-                check_path: /login_check
+                check_path: /back/login_check
+                always_use_default_target_path: true
+                default_target_path: /back
             logout:
-                path: logout
-                target: /back
-            anonymous:
+                path: /back/logout
+                target: /login
 
     access_control:
       - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-      - {path:  ^/back, roles: ROLE_ADMIN}
+      - { path:  ^/back, roles: ROLE_ADMIN}

@@ -3,14 +3,13 @@
 {% block content %}
     <div>
 
-        {#{{ dump(offer) }}#}
 
         <div class="panel heading-border">
             <div class="panel-heading">
                 <span class="panel-title hidden-xs"> {{ offer.title }}</span>
 
                  <span class="pull-right">
-                <a href="{{  path("back_announcement_edit",{'id':offer.id} ) }}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
+                <a href="{#{  path("back_announcement_edit",{'id':offer.id} ) }#}" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow">
                     <i class="fa fa-pencil"></i>
                 </a>
 
@@ -78,8 +77,112 @@
                 </div>
                 <!-- //Annonce -->
 
+
+                <div class="tab-pane" id="review">
+
+
+                    <div class="content-list content-image">
+                        <ul>
+
+                            {% for coms in lastComments %}
+                                <li>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="menu-text pd-5">
+                                                <h5 class="mgbt-xs-0"><span class="badge {% if coms.mark <= 1 %} vd_bg-red {% elseif coms.mark ==2 %} vd_bg-yellow {% elseif coms.mark ==3 %}vd_bg-blue {% elseif coms.mark > 3 %} vd_bg-green {% endif %}">{{ coms.mark }}</span> {{ coms.content }}</h5>
+                                                <div class="menu-info">
+                                                    <div class="menu-date font-xs">Posted By: {{ coms.user }} </div>
+                                                    <div class="menu-date font-xs">Posted:{{ coms.dateCreated|date }} </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2 ">
+                                            <input type="checkbox" data-desactivate="" data-activate=""  class="activate" data-rel="switch" data-size="mini" data-wrapper-class="green" {% if coms.activate %}checked {% endif  %}>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="" class="btn btn-xs btn-danger col-md-3 ">  <i class="fa fa-times"></i></a>
+                                            <a href="" class="btn btn-xs btn-warning col-md-offset-1 col-md-3"> <i class="fa fa-pencil"></i></a>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- Panel Widget -->
+
+                    </div>
+
+
+
+
+
+                </div><!-- End .tab-pane -->
+
+
+
             </div>
+
+
         </div>
     </div>
+
+    {{ form_start(formComments,{'attr':{novalidate:"novalidate",class:"form-horizontal"}}) }} {#Desactive le html5 pour tout le formulaire #}
+    {{ form_errors(formComments) }}
+
+
+    <div class="panel widget">
+        <div class="panel-heading vd_bg-grey">
+            <span class="panel-title hidden-xs"> Review this announcement</span>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                {{ form_label(formComments.user,"User Name",{ label_attr:{ class:"col-sm-2 control-label"}}) }}
+                <div class="col-sm-7 controls">
+                    {{ form_widget(formComments.user,{ attr:{ class:"width-90", placeholder:" Your Name" } }) }}
+
+                </div>
+                {{ form_errors(formComments.user) }}
+
+            </div>
+            <div class="form-group">
+                {{ form_label(formComments.mark,"Mark",{ label_attr:{ class:"col-sm-2 control-label"}}) }}
+                <div class="col-sm-7 controls">
+                    {#{{ dump(formComments.mark) }}#}
+                    {#{{ form_widget(formComments.mark) }}#}
+                    <div class="vd_radio radio-success">
+
+                        {% for mark in formComments.mark.children  %}
+                            <input type="radio" name="{{ mark.vars.full_name }}" id="{{ mark.vars.id }}" value="{{ mark.vars.value }}">
+                            <label for="{{ mark.vars.id }}"> {{ mark.vars.label }}</label>
+                        {% endfor %}
+
+                    </div>
+                    {{ form_errors(formComments.mark) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(formComments.content,"Content",{ label_attr:{ class:"col-sm-2 control-label"}}) }}
+
+                <div class="col-sm-7 controls">
+                    {{ form_widget(formComments.content,{ attr:{ class:"width-90", rows:"3", placeholder:" Your comment here" } }) }}
+
+                    {#<textarea rows="3" class="width-90"></textarea>#}
+                </div>
+                {{ form_errors(formComments.content) }}
+            </div>
+
+            <div class="col-md-offset-4  col-sm-7">
+                <button class="btn vd_btn vd_bg-green vd_white" type="submit"><i class="icon-ok"></i> Save</button>
+            </div>
+
+        </div>
+    </div>
+        {{ form_widget(formComments._token) }}
+   </form>{#Desactive le html5 pour tout le formulaire #}
+
 
 {% endblock %}
