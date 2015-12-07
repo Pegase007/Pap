@@ -3,7 +3,7 @@ services:
 # Announcement Handler Service
     announcement_handler:
         class: PaP\BackBundle\Form\Handler\AnnouncementHandler
-        arguments: [@form.factory, @request, @doctrine.orm.entity_manager]
+        arguments: [@form.factory, @request, @doctrine.orm.entity_manager,]
         scope: request
 
 

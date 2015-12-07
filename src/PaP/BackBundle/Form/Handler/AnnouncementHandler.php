@@ -84,8 +84,8 @@ class AnnouncementHandler
 
         $this->form->getData()->upload();
 
-        $this->em->persist($this->form->getData());
-        $this->em->flush();
+        $this->validate($this->form->getData());
+
     }
 
 
@@ -101,7 +101,7 @@ class AnnouncementHandler
     public function activate(Announcement $offer, $action)
     {
 
-        $announcement = $this->em->getRepository('BackBundle:Announcement')->find($id);
+        $announcement = $this->em->getRepository('BackBundle:Announcement')->find($offer);
 
 
         if($action == "activate")
@@ -116,19 +116,18 @@ class AnnouncementHandler
 
         }
 
-        $em->persist($announcement);
-        $em->flush();
-
-        if ($request->isXmlHttpRequest())
-        {
-            return new JsonResponse([]);
-        }
-
-        return $this->redirectToRoute("back_announcement_index");
+        $this->validate($announcement);
 
 
     }
 
+    public function validate($validate)
+    {
+
+        $this->em->persist($validate);
+        $this->em->flush();
+
+    }
 
 
 

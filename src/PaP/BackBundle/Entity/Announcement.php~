@@ -4,13 +4,21 @@ namespace PaP\BackBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use \PaP\BackBundle\Entity;
 
 /**
  * Announcement
  *
  * @ORM\Table(name="announcement")
  * @ORM\Entity(repositoryClass="PaP\BackBundle\Repository\AnnouncementRepository")
+ *
+ * @UniqueEntity("title")
+ * @UniqueEntity("ref")
+ *
  * @ORM\HasLifecycleCallbacks
  */
 class Announcement
@@ -27,11 +35,11 @@ class Announcement
     /**
      * @var string
      *
-     *   * @Assert\Length(
-     *    min = 2,
+      @Assert\Length(
+     *    min = 10,
      *    minMessage = "Your first name must be at least {{ limit }} characters long",
      *)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank( message="Please enter a Title")
      * @ORM\Column(name="title", type="string", length=100)
      */
     protected $title;
@@ -39,25 +47,46 @@ class Announcement
     /**
      * @var float
      *
-     *    * @Assert\Regex(
+      @Assert\Regex(
      *     pattern="/^[0-9]{1,}(.)?[0-9]{1,2}$/",
      *     message="The value {{ value }} is not a valid price."
      * )
      *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="price", type="integer")
+     * @Assert\NotBlank(message="Please enter a price")
+     * @ORM\Column(name="price", type="float")
      */
     protected $price;
+
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="photo", type="string")
+     */
+    protected $photo;
+
+    /**
+     * @Assert\Image(
+     *     maxSize = "2000k",
+     *     mimeTypes = {"image/jpeg", "image/png","image/gif"},
+     *     mimeTypesMessage = "Please upload a valid image jpeg,png or gif format",
+     *     allowLandscape = true,
+     *     allowPortrait = false
+     * )
+     */
+    protected $file;
+
+
 
     /**
      * @var string
      *
-     * * @Assert\Regex(
+     * @Assert\Regex(
      *     pattern="/^(REF-)[0-9]{1,}$/",
-     *     message="The value {{ value }} is not a valid reference."
+     *     message="{{ value }} is not a valid reference, please enter a reference REF-XXXX."
      * )
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a reference REF-XXX")
      * @ORM\Column(name="ref", type="string", length=100)
      */
     protected $ref;
@@ -65,7 +94,7 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid address")
      * @ORM\Column(name="address", type="string", length=255)
      */
     protected $address;
@@ -73,7 +102,7 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid city")
      * @ORM\Column(name="city", type="string", length=100)
      */
     protected $city;
@@ -83,7 +112,7 @@ class Announcement
      *
      * @Assert\Type(
      *   type="integer",
-     *   message="The value {{ value }} is not a valid {{ type }}."
+     *   message="{{ value }} is not a valid {{ type }}."
      * )
      * @Assert\Length(
      *    min = 5,
@@ -92,7 +121,7 @@ class Announcement
      *    maxMessage = "Your cp must  {{ limit }} characters long",
      *)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid cp")
      * @ORM\Column(name="cp", type="integer")
      */
     protected $cp;
@@ -100,43 +129,50 @@ class Announcement
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid country")
      * @ORM\Column(name="country", type="string", length=100)
      */
     protected $country;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="Please enter a valid type")
+     * @Assert\Choice(choices = {"hs", "apt"}, message = "Choose a valid type.")
+     * @ORM\Column(name="type", type="string", length=100, nullable=false)
      */
     protected $type;
 
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="energyLabel", type="string", length=100)
+     * @Assert\NotBlank(message="Please enter a valid energy")
+     * @Assert\Choice(choices = {"A", "B", "C", "D", "E", "F", "G"}, message = "Choose a valid type.")
+     * @ORM\Column(name="energyLabel", type="string", length=100, nullable=false )
      */
     protected $energyLabel;
 
     /**
-     * @var integer
+     * @var float
      *
-     *@Assert\NotBlank()
-     * @ORM\Column(name="surface", type="integer")
+     * @Assert\Type(
+     *   type="float",
+     *   message="{{ value }} is not a valid {{ type }}."
+     * )
+     *
+     * @Assert\NotBlank(message="Please enter a valid surface")
+     * @ORM\Column(name="surface", type="float")
      */
     protected $surface;
 
     /**
      * @var integer
      *
-     *   * @Assert\Type(
+     * @Assert\Type(
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      *
-     *@Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter the number of rooms")
      * @ORM\Column(name="nbRooms", type="integer")
      */
     protected $nbrooms;
@@ -144,20 +180,20 @@ class Announcement
     /**
      * @var integer
      *
-     *  * @Assert\Type(
+     * @Assert\Type(
      *     type="integer",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      *
-     *@Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter the number of bedrooms")
      * @ORM\Column(name="bedrooms", type="integer")
      */
     protected $bedrooms;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="pricePerMeterSquare", type="integer", nullable=true)
+     * @ORM\Column(name="pricePerMeterSquare", type="float", nullable=true)
      */
     protected $pricePerMeterSquare;
 
@@ -166,12 +202,12 @@ class Announcement
     /**
      * @var string
      *
-     *    * * @Assert\Length(
+     * @Assert\Length(
      *      max = 1500,
      *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
      *
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter a valid content")
      * @ORM\Column(name="content", type="text")
      */
     protected $content;
@@ -184,31 +220,33 @@ class Announcement
     protected $activate;
 
     /**
-     * @var datetime $created_at
+     * @var datetime $createdAt
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
-     * @var datetime $updated_at
+     * @var datetime $updatedAt
      *
-     * @ORM\Column(type="datetime", nullable = true)
+     * @ORM\Column(type="datetime", nullable = true, name="updated_at")
      */
-    protected $updated_at;
+    protected $updatedAt;
+
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="photo")
+     * @var datetime $dateFrom
      *
+     * @ORM\Column(type="datetime", name="date_from")
      */
-    protected $photo;
+    protected $dateFrom;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="user")
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", nullable=true)
+     * @var datetime $dateTo
      *
+     * @ORM\Column(type="datetime", name="date_to")
      */
-    protected $user;
+    protected $dateTo;
 
     /**
      *
@@ -218,10 +256,35 @@ class Announcement
     protected $options;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comments", mappedBy="announcement", cascade={"remove"})
+     */
+    private $comments;
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * construct method
+     */
     public function __construct()
     {
 
         $this->photo = new ArrayCollection();
+        $this->options = new ArrayCollection();
 
 
     }
@@ -243,7 +306,12 @@ class Announcement
      */
     public function onPrePersist()
     {
-        $this->created_at = new \DateTime("now");
+
+//        dump($this->getSurface());
+//        dump($this->getPrice());
+//        dump($this->getPrice()/$this->getSurface());
+        $this->createdAt = new \DateTime("now");
+        $this->pricePerMeterSquare = $this->getPrice()/$this->getSurface();
     }
 
     /**
@@ -253,14 +321,10 @@ class Announcement
      */
     public function onPreUpdate()
     {
-        $this->updated_at = new \DateTime("now");
+        $this->updatedAt = new \DateTime("now");
+        $this->pricePerMeterSquare = $this->getPrice()/$this->getSurface();
+
     }
-
-
-   
-
-
-
 
     /**
      * Get id
@@ -617,7 +681,7 @@ class Announcement
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -629,7 +693,7 @@ class Announcement
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -641,7 +705,7 @@ class Announcement
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -653,7 +717,7 @@ class Announcement
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -663,7 +727,7 @@ class Announcement
      *
      * @return Announcement
      */
-    public function addPhoto(\PaP\BackBundle\Entity\Photo $photo)
+    public function addPhoto(Photo $photo)
     {
         $this->photo[] = $photo;
 
@@ -675,10 +739,29 @@ class Announcement
      *
      * @param \PaP\BackBundle\Entity\Photo $photo
      */
-    public function removePhoto(\PaP\BackBundle\Entity\Photo $photo)
+    public function removePhoto(Photo $photo)
     {
         $this->photo->removeElement($photo);
     }
+
+    /**
+     * Set image
+     *
+     * @param \PaP\BackBundle\Entity\Photo $photo
+     *
+     * @return Announcement
+     */
+    public function setPhoto($photo= null)
+    {
+
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+
+
+
 
     /**
      * Get photo
@@ -690,29 +773,6 @@ class Announcement
         return $this->photo;
     }
 
-    /**
-     * Set user
-     *
-     * @param \PaP\BackBundle\Entity\User $user
-     *
-     * @return Announcement
-     */
-    public function setUser(\PaP\BackBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \PaP\BackBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 
     /**
      * Add option
@@ -721,7 +781,7 @@ class Announcement
      *
      * @return Announcement
      */
-    public function addOption(\PaP\BackBundle\Entity\Options $option)
+    public function addOption(Options $option)
     {
         $this->options[] = $option;
 
@@ -733,7 +793,7 @@ class Announcement
      *
      * @param \PaP\BackBundle\Entity\Options $option
      */
-    public function removeOption(\PaP\BackBundle\Entity\Options $option)
+    public function removeOption(Options $option)
     {
         $this->options->removeElement($option);
     }
@@ -746,5 +806,109 @@ class Announcement
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * Set activate
+     *
+     * @param boolean $activate
+     *
+     * @return Announcement
+     */
+    public function setActivate($activate)
+    {
+        $this->activate = $activate;
+
+        return $this;
+    }
+
+    /**
+     * Get activate
+     *
+     * @return boolean
+     */
+    public function getActivate()
+    {
+        return $this->activate;
+    }
+
+
+
+
+    public function getAbsolutePath()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadRootDir().'/'.$this->photo;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadDir().'/'.$this->photo;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/announcement';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function upload()
+    {
+
+
+
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return "";
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->photo = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+
+
     }
 }

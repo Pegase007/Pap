@@ -64,3 +64,4 @@ class Options
         return $this->title;
     }
 }
+

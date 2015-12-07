@@ -60,6 +60,31 @@
 
                 <!-- end section -->
             </div>
+
+
+         {#   <div class="section row" id="spy1">
+                <div class="col-md-6">
+                        {{ form_widget(form.dateFrom,{'attr':{id:"datetimepicker1", class:'gui-input hasDatepicker' }}) }}
+
+                        <label class="field-icon">
+                            <i class="fa fa-calendar-o"></i>
+                        </label>
+                    {{- form_errors(form.dateFrom) -}}
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="{{ form.dateTo.vars.id }}" class="field prepend-icon">
+                        {{ form_widget(form.dateTo) }}
+                        <label for="{{ form.dateTo.vars.id }}" class="field-icon">
+                        </label>
+                    </label>
+                    {{- form_errors(form.dateTo) -}}
+                </div>
+
+                <!-- end section -->
+            </div>#}
+
             <!-- end .section row section -->
 
             <div class="section row" id="spy1">

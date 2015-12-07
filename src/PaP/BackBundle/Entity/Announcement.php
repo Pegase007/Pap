@@ -234,6 +234,19 @@ class Announcement
     protected $updatedAt;
 
 
+    /**
+     * @var datetime $dateFrom
+     *
+     * @ORM\Column(type="datetime", name="date_from")
+     */
+    protected $dateFrom;
+
+    /**
+     * @var datetime $dateTo
+     *
+     * @ORM\Column(type="datetime", name="date_to")
+     */
+    protected $dateTo;
 
     /**
      *
@@ -270,7 +283,6 @@ class Announcement
     public function __construct()
     {
 
-        $this->photo = new ArrayCollection();
         $this->options = new ArrayCollection();
 
 
@@ -897,5 +909,77 @@ class Announcement
         $this->file = null;
 
 
+    }
+
+    /**
+     * Set dateFrom
+     *
+     * @param \DateTime $dateFrom
+     *
+     * @return Announcement
+     */
+    public function setDateFrom($dateFrom)
+    {
+        $this->dateFrom = $dateFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFrom
+     *
+     * @return \DateTime
+     */
+    public function getDateFrom()
+    {
+        return $this->dateFrom;
+    }
+
+    /**
+     * Set dateTo
+     *
+     * @param \DateTime $dateTo
+     *
+     * @return Announcement
+     */
+    public function setDateTo($dateTo)
+    {
+        $this->dateTo = $dateTo;
+
+        return $this;
+    }
+
+    /**
+     * Get dateTo
+     *
+     * @return \DateTime
+     */
+    public function getDateTo()
+    {
+        return $this->dateTo;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \PaP\BackBundle\Entity\Comments $comment
+     *
+     * @return Announcement
+     */
+    public function addComment(\PaP\BackBundle\Entity\Comments $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \PaP\BackBundle\Entity\Comments $comment
+     */
+    public function removeComment(\PaP\BackBundle\Entity\Comments $comment)
+    {
+        $this->comments->removeElement($comment);
     }
 }

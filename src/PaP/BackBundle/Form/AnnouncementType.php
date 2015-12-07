@@ -36,6 +36,19 @@ class AnnouncementType extends AbstractType
                 'choices'  => array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G')
             ))
             ->add('surface')
+
+            ->add('dateFrom', 'datetime', array(
+                'input' => 'datetime',
+                'widget' => 'single_text',
+                'data' => new \DateTime("now")
+                ))
+
+            ->add('dateTo','date', array(
+                'input'  => 'datetime',
+                'widget' => 'choice',
+                'placeholder' => array('day' => 'Day', 'month' => 'Month', 'year' => 'Year'),
+                'format' => 'dd-MM-yyyy'
+            ))
             ->add('nbrooms')
             ->add('bedrooms')
             ->add('pricePerMeterSquare')

@@ -1,6 +1,14 @@
 {%  extends "BackBundle::layout.html.twig" %}
 {% block title "Annoucement Edit" %}
 
+{%  block stylesheets %}
+    {{ parent() }}
+
+    ￼￼    <link rel="stylesheet" href="{{asset('vendor/plugins/select2/css/core.css')}}">
+    ￼￼    <link rel="stylesheet" href="{{asset('dist/datetimepicker/jquery.datetimepicker.css')}}">
+
+
+{% endblock %}
 
 {% block content %}
 
@@ -18,3 +26,21 @@
 
 
 {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <!-- jQuery Validate Plugin-->
+    <script src="{{ asset("bundles/back/js/jquery.validate.min.js") }}"></script>
+
+    <!-- jQuery Validate Addon -->
+    <script src="{{ asset("bundles/back/js/additional-methods.min.js") }}"></script>
+
+
+    <script src="{{asset('vendor/plugins/select2/select2.min.js')}}"></script>
+    <script src="{{asset('dist/js/main.min.js')}}"></script>
+    <script src="{{asset('dist/datetimepicker/jquery.datetimepicker.js')}}"></script>
+
+{% endblock%}

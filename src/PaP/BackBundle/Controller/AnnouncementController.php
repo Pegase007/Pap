@@ -157,35 +157,18 @@ class AnnouncementController extends Controller
     }
 
 
-    public function activateAction($id,$action, Request $request)
+    public function activateAction(Announcement $offer, $action)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $announcement = $em->getRepository('BackBundle:Announcement')->find($id);
+        $handler = $this->get('announcement_handler');
 
+        $handler->activate($offer,$action);
 
-        if($action == "activate")
-        {
-
-            $announcement->setActivate(1);
-
-        }
-        else
-        {
-            $announcement->setActivate(0);
-
-        }
-
-        $em->persist($announcement);
-        $em->flush();
-
-        if ($request->isXmlHttpRequest())
-        {
-            return new JsonResponse([]);
-        }
 
         return $this->redirectToRoute("back_announcement_index");
 
     }
+
+
 
 
 }
